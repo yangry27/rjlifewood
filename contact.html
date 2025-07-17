@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Lifewood</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        /*
+          Lifewood - Contact Page Stylesheet
+        */
+
+        /* ==========================================================================
+           1. CSS Custom Properties & Base Styles
+           ========================================================================== */
+        :root {
+            --color-paper: #f5eedb;
+            --color-white: #ffffff;
+            --color-dark-serpent: #133020;
+            --color-castleton-green: #046241;
+            --color-saffaron: #ffb347;
+            --color-earth-yellow: #ffc370;
+            --font-primary: 'Manrope', sans-serif;
+            --font-serif: 'Playfair+Display', serif;
+            --font-weight-regular: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 600;
+            --font-weight-extrabold: 800;
+            --header-height: 85px;
+            --border-radius: 12px;
+            --transition-fast: 0.2s ease-in-out;
+            --transition-medium: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --shape-logo-hexagon: polygon(50% 0%, 100% 20%, 100% 80%, 50% 100%, 0% 80%, 0% 20%);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+
+        body {
+            background-color: var(--color-paper);
+            color: var(--color-dark-serpent);
+            font-family: var(--font-primary);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            letter-spacing: 0.015em;
+        }
+        
+        body.no-scroll {
+            overflow: hidden;
+        }
+
+        h1, h2, h3, h4 { line-height: 1.2; text-wrap: balance; }
+        h1 { font-family: var(--font-primary); font-weight: var(--font-weight-extrabold); font-size: clamp(3.5rem, 8vw, 6rem); }
+        h2 { font-size: clamp(2rem, 5vw, 3rem); font-weight: var(--font-weight-semibold); }
+        h3 { font-size: 1.5rem; font-weight: var(--font-weight-semibold); margin-bottom: 1rem; }
+        p { margin-bottom: 1rem; max-width: 65ch; opacity: 0.9; }
+        a { color: var(--color-castleton-green); text-decoration: none; transition: color 0.2s ease; font-weight: var(--font-weight-semibold); }
+        a:hover { color: var(--color-dark-serpent); }
+
+        /* ==========================================================================
+           2. Header & Navigation
+           ========================================================================== */
+        .site-header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 5%; height: var(--header-height);
+            background: #F9F7F7;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(19, 48, 32, 0.1);
+        }
+        .logo-link img { height: 100px; width: auto; transition: transform 0.4s ease; }
+        .logo-link:hover img { transform: scale(1.05); }
+        
+        .main-nav { flex-grow: 1; display: flex; justify-content: flex-end; }
+        .main-nav ul { list-style: none; display: flex; justify-content: space-around; width: 100%; max-width: 650px; }
+        .main-nav a {
+            color: var(--color-dark-serpent); font-weight: var(--font-weight-medium);
+            font-size: 1rem; padding: 0.5rem 1rem; position: relative;
+            display: block; text-align: center; white-space: nowrap;
+        }
+        .main-nav a::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px;
+            background-color: var(--color-castleton-green); transform: scaleX(0);
+            transform-origin: center; transition: transform var(--transition-medium);
+        }
+        .main-nav a:hover::after, .main-nav a.active::after { transform: scaleX(1); }
+        
+        .mobile-nav-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 30px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1001;
+        }
+        .mobile-nav-toggle .dot {
+            display: block;
+            width: 5px;
+            height: 5px;
+            background-color: var(--color-dark-serpent);
+            border-radius: 50%;
+            margin: 0 auto;
+        }
+
+        /* ==========================================================================
+           3. Contact Page Main Content
+           ========================================================================== */
+        .page-container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: calc(var(--header-height) + 5rem) 5% 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        #bg-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translateX(-50%) translateY(-50%);
+            z-index: 0;
+            object-fit: cover;
+        }
+        .page-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(19, 48, 32, 0.75);
+            z-index: 1;
+        }
+        .contact-content-wrapper {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .contact-intro { text-align: center; margin-bottom: 4rem; }
+        .contact-intro h1 { 
+            margin-bottom: 1rem; 
+            color: var(--color-paper);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        .contact-intro p { 
+            font-size: 1.25rem; 
+            max-width: 50ch; 
+            margin: 0 auto; 
+            color: var(--color-paper);
+            opacity: 0.9;
+        }
+        .contact-intro p a { color: var(--color-saffaron); }
+        .contact-intro p a:hover { color: var(--color-white); }
+        .contact-form {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        .contact-form .form-group { margin-bottom: 1.5rem; }
+        .contact-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: var(--font-weight-semibold);
+            font-size: 0.9rem;
+        }
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(19, 48, 32, 0.2);
+            background-color: var(--color-white);
+            font-family: var(--font-primary);
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .contact-form input:focus, .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--color-saffaron);
+            box-shadow: 0 0 0 3px rgba(255, 179, 71, 0.3);
+        }
+        .contact-form textarea { resize: vertical; min-height: 150px; }
+        
+        .submit-btn {
+            display: inline-block;
+            background: var(--color-saffaron);
+            color: var(--color-dark-serpent);
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            font-weight: var(--font-weight-semibold);
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+        .submit-btn:hover {
+            background: var(--color-earth-yellow);
+            transform: translateY(-3px);
+        }
+
+        /* ==========================================================================
+           4. "Always On" Section
+           ========================================================================== */
+        .always-on-section {
+            background-color: #046241;
+            color: var(--color-paper);
+            padding: 5rem 5%;
+            text-align: center;
+        }
+        .always-on-section h2 {
+            font-family: var(--font-primary);
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            color: #FFB347;
+            font-weight: var(--font-weight-semibold);
+        }
+
+        /* ==========================================================================
+           5. Footer
+           ========================================================================== */
+        .site-footer-new { background-color: #f5eedb; color: var(--color-dark-serpent); padding: 4rem 5%; border-top: 1px solid rgba(19, 48, 32, 0.1); }
+        .footer-container { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; max-width: 1600px; margin: 0 auto; gap: 2rem; }
+        .footer-column { flex: 1; min-width: 200px; padding: 0 15px; }
+        .footer-main { flex-basis: 30%; min-width: 250px; }
+        .footer-logo img { height: 45px; width: auto; margin-bottom: 1rem; }
+        .footer-contact-btn { display: inline-block; color: var(--color-dark-serpent); border: 2px solid var(--color-dark-serpent); padding: 0.6rem 2rem; border-radius: 50px; font-weight: 600; margin-top: 1.5rem; transition: all 0.2s ease; text-decoration: none; }
+        .footer-contact-btn:hover { background-color: var(--color-dark-serpent); color: #f5eedb; }
+        .footer-column h4 { color: var(--color-dark-serpent); margin-bottom: 1rem; font-weight: 600; font-size: 0.9rem; }
+        .footer-links ul { list-style: none; padding: 0; margin: 0; }
+        .footer-links li { margin-bottom: 0.75rem; }
+        .footer-links a { color: var(--color-dark-serpent); text-decoration: none; opacity: 0.8; transition: opacity 0.2s ease; }
+        .footer-links a:hover { opacity: 1; }
+        .footer-social { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+        .social-text { display: flex; flex-direction: column; line-height: 1.2; font-size: 0.8rem; letter-spacing: 0.1em; }
+        .social-icon-yt { width: 56px; height: 40px; }
+        .social-icon-yt rect { fill: #FF0000; stroke: none; }
+        .social-icon-yt path { fill: #ffffff; }
+        .social-icon-link:hover .social-icon-yt { opacity: 0.85; }
+
+        /* --- ADDED CSS for Facebook Icon --- */
+        .social-icon-fb {
+            width: 40px;
+            height: 40px;
+        }
+        .social-icon-link:hover .social-icon-fb {
+            opacity: 0.85;
+        }
+        /* --- END ADDED CSS --- */
+
+        .be-amazed-logo { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; text-transform: uppercase; }
+        .logo-icon-footer { width: 14px; height: 24px; background: var(--color-saffaron); clip-path: var(--shape-logo-hexagon); display: inline-block; }
+
+        /* ==========================================================================
+           6. CURSOR SPARKLE EFFECT
+           ========================================================================== */
+        .click-sparkle {
+            position: fixed; width: 25px; height: 25px; border-radius: 50%;
+            pointer-events: none; z-index: 9999;
+            transform: translate(-50%, -50%) scale(0);
+            animation: sparkle-animation 500ms forwards;
+        }
+        @keyframes sparkle-animation {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+        }
+
+        /* ==========================================================================
+           7. Responsive
+           ========================================================================== */
+        @media (max-width: 768px) {
+            html { font-size: 15px; }
+
+            .mobile-nav-toggle { display: flex; }
+            .main-nav {
+                position: fixed; top: 0; right: -100%;
+                width: 80%; max-width: 320px; height: 100vh;
+                background-color: var(--color-paper);
+                padding-top: var(--header-height);
+                transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                z-index: 999; box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+                display: flex; 
+            }
+            .main-nav.is-open { right: 0; }
+            .main-nav ul {
+                flex-direction: column; justify-content: flex-start;
+                align-items: center; padding-top: 3rem; width: 100%;
+            }
+            .main-nav li {
+                width: 100%; text-align: center;
+                border-bottom: 1px solid rgba(19, 48, 32, 0.1);
+            }
+            .main-nav li:first-child {
+                border-top: 1px solid rgba(19, 48, 32, 0.1);
+            }
+            .main-nav a { padding: 1.5rem 1rem; font-size: 1.2rem; width: 100%; }
+            .main-nav a::after { display: none; }
+            
+            .contact-form { padding: 1.5rem; }
+
+            .footer-container { 
+                flex-direction: column; text-align: center; align-items: center; 
+            }
+            .footer-column { 
+                min-width: 100%; margin-bottom: 2rem; padding: 0; 
+            }
+            .footer-social { justify-content: center; }
+        }
+    </style>
+</head>
+<body class=""> 
+    <header class="site-header">
+        <a href="index.html" class="logo-link">
+             <img src="logo.png" alt="Lifewood Company Logo">
+        </a>
+        <nav class="main-nav" id="main-nav-container">
+             <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about us.html">About us</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+            </ul>
+        </nav>
+
+        <button class="mobile-nav-toggle" aria-label="Open navigation menu">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </button>
+
+    </header>
+
+    <main>
+        <div class="page-container">
+            <video autoplay muted loop playsinline id="bg-video">
+                <source src="Generated File July 14, 2025 - 3_48PM.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+
+            <div class="contact-content-wrapper">
+                <div class="contact-intro">
+                    <h1>Get in Touch</h1>
+                    <p>
+                        Whether you have a question about our services, a proposal for a project, or just want to say hello, our door is always open.
+                    </p>
+                </div>
+    
+                <div class="contact-form">
+                    <h3>Send us a Message</h3>
+                    <form action="index.html" method="POST">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Your Message</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <section class="always-on-section">
+        <h2>Always On, Never Off</h2>
+    </section>
+
+    <footer class="site-footer-new">
+        <div class="footer-container">
+            <div class="footer-column footer-main">
+                <a href="index.html" class="footer-logo"><img src="logo.png" alt="Lifewood Logo"></a>
+                <p>Architects of transformative technology, bridging cultures and industries.</p>
+                <a href="contact.html" class="footer-contact-btn">Contact us</a>
+            </div>
+            <div class="footer-column footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about us.html">About Us</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                </ul>
+            </div>
+           <div class="footer-column footer-connect">
+                <h4>Connect With Us</h4>
+                <div class="footer-social">
+                    <!-- ADDED: Facebook Icon -->
+                    <a href="https://www.facebook.com/LifewoodPH" target="_blank" class="social-icon-link" aria-label="Lifewood on Facebook">
+                        <svg class="social-icon-fb" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="40" height="40" rx="8" fill="#1877F2"/>
+                            <path d="M24.43 32.22V20.84h3.86l.58-4.48h-4.44v-2.86c0-1.3.36-2.18 2.22-2.18h2.37v-4c-.41-.05-1.82-.18-3.46-.18-3.42 0-5.76 2.09-5.76 5.92v3.3H16v4.48h3.86v11.38h4.57z" fill="#FFFFFF"/>
+                        </svg>
+                    </a>
+                    <!-- END ADDED -->
+                    <a href="https://www.youtube.com/@LifewoodDataTechnology/videos" target="_blank" class="social-icon-link">
+                        <svg class="social-icon-yt" viewBox="0 0 56 40" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="1" y="1" width="54" height="38" rx="8" fill="#FF0000"/><path d="M37.25 19.9998L24.5 27.7998V12.1998L37.25 19.9998Z" fill="#FFFFFF"/></svg>
+                    </a>
+                    
+                </div>
+                <div class="be-amazed-logo">BE AMAZED<i class="logo-icon-footer"></i></div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // --- Mobile nav script ---
+            const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+            const mainNav = document.querySelector('.main-nav');
+            const body = document.body;
+
+            mobileNavToggle.addEventListener('click', function() {
+                mainNav.classList.toggle('is-open');
+                body.classList.toggle('no-scroll');
+            });
+
+            // --- Cursor Sparkle Effect Script ---
+            const sparkleColors = ['#f5eee8', '#ffb347', '#046241', '#133020', '#ffffff'];
+
+            document.body.addEventListener('mousedown', function(e) {
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('click-sparkle');
+                sparkle.style.left = `${e.clientX}px`;
+                sparkle.style.top = `${e.clientY}px`;
+                const randomColor = sparkleColors[Math.floor(Math.random() * sparkleColors.length)];
+                sparkle.style.backgroundColor = randomColor;
+                document.body.appendChild(sparkle);
+
+                setTimeout(() => {
+                    sparkle.remove();
+                }, 500);
+            });
+        });
+    </script>
+</body>
+</html>

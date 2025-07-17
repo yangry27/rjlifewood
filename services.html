@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services - Lifewood</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+ <style>
+    /*
+      Lifewood - Services Page Stylesheet
+    */
+
+    /* ==========================================================================
+       1. CSS Custom Properties & Base Styles
+       ========================================================================== */
+   :root {
+        --color-paper: #f5eedb;
+        --color-white: #ffffff;
+        --color-sea-salt: #f9f9f9;
+        --color-dark-serpent: #133020;
+        --color-castleton-green: #046241;
+        --color-saffaron: #ffb347;
+        --font-primary: 'Manrope', sans-serif;
+        --font-serif: 'Playfair Display', serif;
+        --header-height: 85px; 
+        --border-radius: 8px;
+        --border-radius-large: 24px;
+        --transition-fast: 0.2s ease-in-out;
+        --transition-medium: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        --transition-smooth: 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+        --shape-logo-hexagon: polygon(50% 0%, 100% 20%, 100% 80%, 50% 100%, 0% 80%, 0% 20%);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+        background-color: var(--color-white);
+        color: var(--color-dark-serpent);
+        font-family: var(--font-primary);
+        font-weight: 400;
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overflow-x: hidden;
+        letter-spacing: 0.015em;
+    }
+
+    body.no-scroll {
+        overflow: hidden;
+    }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+    h1, h2, h3, h4 { line-height: 1.2; text-wrap: balance; font-family: var(--font-primary); }
+    h1 { font-weight: 800; font-size: clamp(2.5rem, 8vw, 5rem); }
+    h2 { font-weight: 600; font-size: clamp(2.5rem, 6vw, 3.5rem); }
+    h3 { font-size: 1.25rem; font-weight: 800; }
+    p { margin-bottom: 1rem; max-width: 60ch; opacity: 0.8; }
+    a { color: var(--color-saffaron); text-decoration: none; transition: color 0.2s ease; }
+    a:hover { color: var(--color-dark-serpent); }
+    img, video { max-width: 100%; height: auto; display: block; }
+
+    /* ==========================================================================
+       2. Header & Navigation
+       ========================================================================== */
+     .site-header {
+          position: sticky; top: 0; left: 0; width: 100%; z-index: 1000;
+          display: flex; justify-content: space-between; align-items: center;
+          padding: 0 5%; height: var(--header-height);
+          background: var(--color-sea-salt); backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid rgba(19, 48, 32, 0.1);
+      }
+    .logo-link img { height: 100px; width: auto; transition: transform 0.4s ease; }
+    .logo-link:hover img { transform: scale(1.05); }
+    .main-nav ul { list-style: none; display: flex; }
+    .main-nav a {
+        color: var(--color-dark-serpent); font-weight: 500; 
+        font-size: 1rem; position: relative; display: block;
+        padding: 0 1rem; line-height: var(--header-height);
+    }
+    .main-nav a::after {
+        content: ''; position: absolute; bottom: 25px;
+        left: 50%; transform: translateX(-50%) scaleX(0);
+        background-color: var(--color-castleton-green);
+        width: 60%; height: 2px;
+        transition: transform 0.4s ease; transform-origin: center;
+    }
+    .main-nav a:hover::after, .main-nav li > a.active::after { transform: translateX(-50%) scaleX(1); }
+    
+    .main-nav a.active {
+        color: #000000;
+    }
+    
+    .mobile-nav-toggle {
+        display: none;
+        z-index: 1100;
+        position: relative;
+        width: 40px;
+        height: 40px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .dots-icon,
+    .dots-icon::before,
+    .dots-icon::after {
+        display: block;
+        background-color: var(--color-dark-serpent);
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        transition: all 0.3s ease-in-out;
+    }
+    .dots-icon {
+        position: relative;
+    }
+    .dots-icon::before,
+    .dots-icon::after {
+        content: '';
+        position: absolute;
+        left: 0;
+    }
+    .dots-icon::before { top: -10px; }
+    .dots-icon::after { top: 10px; }
+
+    /* ==========================================================================
+       3. Hero Section & Other Sections...
+       ========================================================================== */
+    .hero-section {
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden; 
+        padding: 2rem;
+    }
+    .hero-video { position: absolute; top: 50%; left: 50%; width: 100%; height: 100%; object-fit: cover; transform: translate(-50%, -50%); z-index: -2; }
+    .hero-section::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(19, 48, 32, 0.6); z-index: -1; }
+    
+    .hero-frame { 
+        position: relative; 
+        text-align: center; 
+        padding: 4rem 5rem; 
+        border-radius: var(--border-radius-large); 
+        background: rgba(10, 25, 30, 0.25); 
+        backdrop-filter: blur(1px); 
+        -webkit-backdrop-filter: blur(8px); 
+        border: 2px solid rgba(255, 179, 71, 0.4); 
+        box-shadow: 0 0 40px rgba(255, 179, 71, 0.2), inset 0 0 30px rgba(255, 179, 71, 0.2); 
+    }
+
+    .hero-frame h1 { color: var(--color-white); margin-bottom: 0.5rem; text-shadow: 0 2px 20px rgba(0,0,0,0.3); }
+    .hero-frame p { font-size: clamp(1rem, 3vw, 1.25rem); color: var(--color-white); opacity: 0.85; max-width: 45ch; margin-bottom: 0; text-shadow: 0 1px 10px rgba(0,0,0,0.3); }
+    
+    .page-wrapper { background-color: var(--color-castleton-green); color: var(--color-paper); max-width: 2100px; margin: 0 auto; position: relative; }
+    .section-title { text-align: center; margin-bottom: 3rem; color: var(--color-paper); }
+    .section-title span { color: var(--color-saffaron); }
+    .section-title.on-light { color: var(--color-dark-serpent); }
+    .section-title.on-light span { color: var(--color-castleton-green); }
+    .services-interactive-section { padding: 5rem 5%; }
+    .core-services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; max-width: 1400px; margin: 0 auto; }
+    
+    /* Card styles */
+    .core-service-card {
+        border: 1px solid rgba(245, 238, 232, 0.15);
+        border-radius: var(--border-radius-large);
+        position: relative;
+        overflow: hidden;
+        background-color: var(--color-dark-serpent);
+        display: flex;
+        flex-direction: column;
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out, border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+    .core-service-card.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    .core-service-card:hover {
+        transform: translateY(-10px);
+        border-color: rgba(255, 179, 71, 0.5);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+    .card-video-wrapper {
+        height: 250px;
+        position: relative;
+        overflow: hidden;
+    }
+    .card-video-wrapper video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+    .core-service-card:hover .card-video-wrapper video {
+        transform: scale(1.05);
+    }
+    .card-content-details {
+        padding: 2rem;
+        flex-grow: 1;
+    }
+    .card-content-details h3 {
+        font-size: 2rem;
+        color: var(--color-saffaron);
+        margin-bottom: 1rem;
+        font-weight: 600;
+        line-height: 1.1;
+    }
+    .card-content-details p {
+        font-size: 1rem;
+        max-width: none;
+        opacity: 0.9;
+        color: var(--color-paper);
+        margin-bottom: 0;
+    }
+
+    .modalities-section { background-color:#F9F7F7; padding: 6rem 5%; }
+    .modalities-container { max-width: 1200px; margin: 0 auto; }
+    .modalities-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 3rem; }
+    .modality-card { background-color: var(--color-paper); border: 1px solid rgba(19, 48, 32, 0.1); border-radius: var(--border-radius); padding: 2.5rem 2rem; text-align: center; transition: all var(--transition-medium); }
+    .modality-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(19, 48, 32, 0.08); border-color: var(--color-castleton-green); }
+    .modality-image-container { height: 60px; width: 60px; margin: 0 auto 1.5rem; border-radius: 50%; overflow: hidden; background-color: var(--color-dark-serpent); position: relative; border: 2px solid var(--color-castleton-green); }
+    .modality-image-container img { width: 100%; height: 100%; object-fit: cover; }
+    .modality-card h4 { color: var(--color-dark-serpent); font-size: 1.5rem; margin-bottom: 0.75rem; font-weight: 600; }
+    .modality-card p { font-size: 0.95rem; color: var(--color-dark-serpent); opacity: 0.7; max-width: 100%; margin-bottom: 0; }
+    
+    .site-footer-new { background-color: var(--color-paper); color: var(--color-dark-serpent); padding: 4rem 5%; border-top: 1px solid rgba(19, 48, 32, 0.1); }
+    .footer-container { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; max-width: 1600px; margin: 0 auto; gap: 2rem; }
+    .footer-column { flex: 1; min-width: 200px; padding: 0 15px; }
+    .footer-main { flex-basis: 30%; min-width: 250px; }
+    .footer-logo img { height: 45px; width: auto; margin-bottom: 1rem; }
+    .footer-contact-btn { display: inline-block; color: var(--color-dark-serpent); border: 2px solid var(--color-dark-serpent); padding: 0.6rem 2rem; border-radius: 50px; font-weight: 600; margin-top: 1.5rem; transition: all 0.2s ease; text-decoration: none; }
+    .footer-contact-btn:hover { background-color: var(--color-dark-serpent); color: var(--color-paper); }
+    .footer-column h4 { color: var(--color-dark-serpent); margin-bottom: 1rem; font-weight: 600; font-size: 0.9rem; }
+    .footer-links ul { list-style: none; padding: 0; margin: 0; }
+    .footer-links li { margin-bottom: 0.75rem; }
+    .footer-links a { color: var(--color-dark-serpent); text-decoration: none; opacity: 0.8; transition: opacity 0.2s ease; font-weight: 400; }
+    .footer-links a:hover { opacity: 1; }
+    .footer-social { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+    .social-text { display: flex; flex-direction: column; line-height: 1.2; font-size: 0.8rem; letter-spacing: 0.1em; }
+    .social-icon-yt { width: 56px; height: 40px; }
+    .social-icon-yt rect { fill: #FF0000; stroke: none; }
+    .social-icon-yt path { fill: #FFFFFF; }
+    .social-icon-link:hover .social-icon-yt { opacity: 0.85; }
+    
+    /* --- ADDED CSS for Facebook Icon --- */
+    .social-icon-fb {
+        width: 40px;
+        height: 40px;
+    }
+    .social-icon-link:hover .social-icon-fb {
+        opacity: 0.85;
+    }
+    /* --- END ADDED CSS --- */
+    
+    .be-amazed-logo { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; text-transform: uppercase; }
+    .logo-icon-footer { width: 14px; height: 24px; background: var(--color-saffaron); clip-path: var(--shape-logo-hexagon); display: inline-block; }
+    
+    /* ==========================================================================
+       Responsive Styles
+       ========================================================================== */
+    @media (max-width: 992px) {
+        .mobile-nav-toggle { 
+            display: flex; 
+            z-index: 1002;
+        }
+        
+        .main-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 320px;
+            height: 100vh;
+            background-color: var(--color-paper);
+            padding-top: var(--header-height);
+            transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 1001;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        .main-nav.is-open {
+            right: 0;
+        }
+        .main-nav ul {
+            width: 100%;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 2rem 0 0 0;
+            gap: 0;
+        }
+        .main-nav li {
+            width: 100%;
+            border-bottom: 1px solid rgba(19, 48, 32, 0.1);
+        }
+        .main-nav li:last-child {
+            border-bottom: none;
+        }
+        .main-nav a {
+            display: block;
+            width: 100%;
+            text-align: center;
+            font-size: 1.5rem;
+            line-height: 1.5;
+            padding: 1rem 2rem;
+        }
+        .main-nav a::after {
+            display: none;
+        }
+        .main-nav a.active {
+            color: #000000;
+        }
+    }
+
+    @media (max-width: 768px) {
+        html { font-size: 15px; } 
+        .hero-frame { padding: 3rem 1.5rem; } 
+        .modalities-section { padding: 4rem 5%; }
+        .footer-container { flex-direction: column; text-align: center; align-items: center; }
+        .footer-column { min-width: 100%; margin-bottom: 2rem; padding: 0; }
+        .footer-social { justify-content: center; }
+    }
+</style>
+</head>
+<body class="">
+    <header class="site-header">
+        <a href="index.html" class="logo-link">
+             <img src="logo.png" alt="Lifewood Company Logo">
+        </a>
+        <nav class="main-nav" id="main-nav-container">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                 <li><a href="about us.html">About us</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="mobile-nav-toggle" aria-controls="main-nav-container" aria-expanded="false">
+            <span class="sr-only">Menu</span>
+            <span class="dots-icon"></span>
+        </button>
+    </header>
+
+    <main>
+        <section class="hero-section">
+            <video playsinline autoplay muted loop class="hero-video">
+                <source src="Generated File July 14, 2025 - 10_20AM.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="hero-frame">
+                <h1>Our Data Services</h1>
+                <p>We turn raw information into intelligent action.</p>
+            </div>
+        </section>
+        
+        <section class="modalities-section" id="modalities-section">
+            <div class="modalities-container">
+                <h2 class="section-title on-light">Explore in <span>Detail</span></h2>
+                <div class="modalities-grid">
+                    <div class="modality-card">
+                        <div class="modality-image-container">
+                            <img src="pexels-magda-ehlers-1337374.webp" alt="Text data icon">
+                        </div>
+                        <h4>Text</h4>
+                        <p>From documents and articles to social media and transcripts, we process and structure all forms of text data for NLP and language models.</p>
+                    </div>
+                    <div class="modality-card">
+                         <div class="modality-image-container">
+                            <img src="AdobeStock_369809322.jpg" alt="Image and video data icon">
+                        </div>
+                        <h4>Image & Video</h4>
+                        <p>High-resolution images and video streams are annotated for object detection, segmentation, and activity recognition tasks.</p>
+                    </div>
+                    <div class="modality-card">
+                        <div class="modality-image-container">
+                           <img src="happy-young-woman-headphones-using-600nw-2412567951.webp" alt="Audio data icon">
+                        </div>
+                        <h4>Audio</h4>
+                        <p>We capture and transcribe speech, classify sounds, and process audio data for voice recognition and sound event detection systems.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="page-wrapper" id="services-content">
+            <section class="services-interactive-section">
+                <h2 class="section-title">Our Core <span>Services</span></h2>
+                <div class="core-services-grid">
+                    
+                    <div class="core-service-card" data-service="acquisition">
+                        <div class="card-video-wrapper">
+                             <video src="a.mp4" autoplay loop muted playsinline>Your browser does not support the video tag.</video>
+                        </div>
+                        <div class="card-content-details">
+                            <h3>01. Data Acquisition</h3>
+                            <p>We specialize in sourcing and aggregating diverse, large-scale datasets essential for your AI systems. This includes ethical web scraping, API integration, and accessing licensed third-party data troves. We handle the complex logistics of procurement so you can focus on model development.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="core-service-card" data-service="collection">
+                        <div class="card-video-wrapper">
+                             <video src="data.mp4" autoplay loop muted playsinline>Your browser does not support the video tag.</video>
+                        </div>
+                        <div class="card-content-details">
+                            <h3>02. Data Collection</h3>
+                            <p>Our global teams expertly gather and process a wide spectrum of bespoke data, including text, speech, audio, video, and even geospatial information. Through custom tools, surveys, and direct recording, we capture the specific, nuanced information your unique projects demand to succeed.</p>
+                        </div>
+                    </div>
+
+                    <div class="core-service-card" data-service="annotation">
+                        <div class="card-video-wrapper">
+                             <video src="ann.mp4" autoplay loop muted playsinline>Your browser does not support the video tag.</video>
+                        </div>
+                        <div class="card-content-details">
+                            <h3>03. Data Annotation</h3>
+                            <p>Precision is key. We provide high-quality, human-powered annotation using techniques like bounding boxes, semantic segmentation, and named entity recognition. This meticulous labeling creates the ground-truth data required for robust computer vision and NLP models to learn effectively.</p>
+                        </div>
+                    </div>
+
+                    <div class="core-service-card" data-service="curation">
+                        <div class="card-video-wrapper">
+                            <video src="curation.mp4" autoplay loop muted playsinline>Your browser does not support the video tag.</video>
+                        </div>
+                        <div class="card-content-details">
+                           <h3>04. Data Curation</h3>
+                           <p>We transform raw data into a valuable, organized asset. Our curation process involves deduplication, normalization, and enrichment. We sift, select, and index information to build a reliable, accessible, and perfectly structured data catalog for your specific goals.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="core-service-card" data-service="validation">
+                        <div class="card-video-wrapper">
+                           <video src="valid.mp4" autoplay loop muted playsinline>Your browser does not support the video tag.</video>
+                        </div>
+                        <div class="card-content-details">
+                           <h3>05. Data Validation</h3>
+                           <p>Data integrity is our priority. We rigorously verify that your data is consistent, accurate, and complete. By implementing schema checks, outlier detection, and cross-reference analysis, we ensure your information is trustworthy, fit for purpose, and ready for production.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+   <footer class="site-footer-new">
+        <div class="footer-container">
+            <div class="footer-column footer-main">
+                <a href="index.html" class="footer-logo"><img src="logo.png" alt="Lifewood Logo"></a>
+                <p>Architects of transformative technology, bridging cultures and industries.</p>
+                <a href="contact.html" class="footer-contact-btn">Contact us</a>
+            </div>
+            <div class="footer-column footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about us.html">About Us</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                </ul>
+            </div>
+           <div class="footer-column footer-connect">
+                <h4>Connect With Us</h4>
+                <div class="footer-social">
+                    <!-- ADDED: Facebook Icon -->
+                    <a href="https://www.facebook.com/LifewoodPH" target="_blank" class="social-icon-link" aria-label="Lifewood on Facebook">
+                        <svg class="social-icon-fb" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="40" height="40" rx="8" fill="#1877F2"/>
+                            <path d="M24.43 32.22V20.84h3.86l.58-4.48h-4.44v-2.86c0-1.3.36-2.18 2.22-2.18h2.37v-4c-.41-.05-1.82-.18-3.46-.18-3.42 0-5.76 2.09-5.76 5.92v3.3H16v4.48h3.86v11.38h4.57z" fill="#FFFFFF"/>
+                        </svg>
+                    </a>
+                    <!-- END ADDED -->
+                    <a href="https://www.youtube.com/@LifewoodDataTechnology/videos" target="_blank" class="social-icon-link">
+                        <svg class="social-icon-yt" viewBox="0 0 56 40" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="1" y="1" width="54" height="38" rx="8" fill="#FF0000"/><path d="M37.25 19.9998L24.5 27.7998V12.1998L37.25 19.9998Z" fill="#FFFFFF"/></svg>
+                    </a>
+                  
+                </div>
+                <div class="be-amazed-logo">BE AMAZED<i class="logo-icon-footer"></i></div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            /* --- Mobile Navigation Script --- */
+            const navToggle = document.querySelector('.mobile-nav-toggle');
+            const mainNav = document.querySelector('.main-nav');
+            
+            navToggle.addEventListener('click', () => {
+                const isOpen = mainNav.classList.toggle('is-open');
+                navToggle.setAttribute('aria-expanded', isOpen);
+                document.body.classList.toggle('no-scroll');
+            });
+
+            /* --- ACTIVE NAVIGATION LINK HIGHLIGHTER --- */
+            const navLinks = document.querySelectorAll('.main-nav a');
+            const currentURL = window.location.href;
+            let activeLinkFound = false;
+
+            navLinks.forEach(link => {
+                if (link.href === currentURL) {
+                    link.classList.add('active');
+                    activeLinkFound = true;
+                }
+            });
+
+            if (!activeLinkFound && (currentURL.endsWith('/') || currentURL.endsWith('services.html'))) {
+                 const servicesLink = document.querySelector('.main-nav a[href="services.html"]');
+                 if (servicesLink) {
+                    servicesLink.classList.add('active');
+                 }
+            }
+
+
+            /* --- Scroll Animation Script --- */
+            const animatedElements = document.querySelectorAll('.core-service-card, .modality-card');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.transitionDelay = `${index * 100}ms`;
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            animatedElements.forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>

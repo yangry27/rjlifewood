@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Core Capabilities - Lifewood</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        /*
+          Lifewood - Projects/Capabilities Page Stylesheet
+        */
+
+        /* ==========================================================================
+           1. CSS Custom Properties & Base Styles
+           ========================================================================== */
+        :root {
+            --color-paper: #f5eedb;
+            --color-white: #ffffff;
+            --color-sea-salt: #f9f9f9;
+            --color-dark-serpent: #133020; 
+            --color-castleton-green: #046241;
+            --color-saffaron: #ffb347;
+            --font-primary: 'Manrope', sans-serif;
+            --header-height: 85px;
+            --border-radius: 16px;
+            --shape-logo-hexagon: polygon(50% 0%, 100% 20%, 100% 80%, 50% 100%, 0% 80%, 0% 20%);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+
+        body {
+            background-color: var(--color-castleton-green);
+            color: var(--color-paper);
+            font-family: var(--font-primary);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            letter-spacing: 0.015em;
+            padding-top: var(--header-height);
+        }
+        
+        body.nav-open { overflow: hidden; }
+        h1, h2, h3, h4 { color: var(--color-paper); line-height: 1.2; text-wrap: balance; }
+        p { margin-bottom: 1rem; max-width: 65ch; opacity: 0.8; }
+        a { color: var(--color-saffaron); text-decoration: none; transition: color 0.2s ease; font-weight: 600; }
+        a:hover { color: var(--color-white); }
+        img, video { max-width: 100%; height: auto; display: block; }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+
+        /* ==========================================================================
+           2. Header & Navigation
+           ========================================================================== */
+        .site-header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 5%; height: var(--header-height);
+            background: var(--color-white);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(19, 48, 32, 0.1);
+        }
+        .logo-link img { height: 100px; width: auto; transition: transform 0.4s ease; }
+        .logo-link:hover img { transform: scale(1.05); }
+        .main-nav ul { list-style: none; display: flex; }
+        .main-nav a {
+            color: var(--color-dark-serpent); font-weight: 500;
+            font-size: 1.1rem; position: relative; display: block; width: 120px;
+            text-align: center; line-height: var(--header-height);
+        }
+        .main-nav a::after {
+            content: ''; position: absolute; bottom: 20px; left: 50%;
+            transform: translateX(-50%) scaleX(0); background-color: var(--color-castleton-green);
+            width: 80%; height: 2px; transition: transform 0.4s ease; transform-origin: center;
+        }
+        .main-nav a:hover::after, .main-nav a.active::after { transform: translateX(-50%) scaleX(1); }
+        
+        .mobile-nav-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 30px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1100;
+        }
+        .mobile-nav-toggle .dot {
+            display: block;
+            width: 5px;
+            height: 5px;
+            background-color: var(--color-dark-serpent);
+            border-radius: 50%;
+            margin: 0 auto;
+        }
+        
+        /* ==========================================================================
+           3. HERO SECTION STYLES
+           ========================================================================== */
+        .hero-section {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            overflow: visible; 
+            z-index: -1;
+        }
+        #hero-video {
+            position: absolute; top: 50%; left: 50%;
+            min-width: 100%; min-height: 100%;
+            width: auto; height: auto;
+            transform: translateX(-50%) translateY(-50%);
+            z-index: -2;
+            object-fit: cover;
+        }
+        .hero-section::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.4); z-index: -1;
+        }
+        .hero-frame {
+            position: relative; z-index: 1; text-align: center; padding: 3rem 4rem;
+            border-radius: var(--border-radius); background: rgba(10, 25, 30, 0.25);
+            backdrop-filter: blur(1px); -webkit-backdrop-filter: blur(8px);
+            border: 2px solid rgba(255, 179, 71, 0.5); 
+            box-shadow: 0 0 60px rgba(255, 179, 71, 0.3), 
+                        inset 0 0 30px rgba(255, 179, 71, 0.25);
+        }
+        .hero-frame h1 {
+            font-family: var(--font-primary);
+            font-weight: 800;
+            font-size: clamp(3rem, 7vw, 5rem);
+            margin-bottom: 1rem; color: var(--color-white);
+            text-shadow: 0 2px 20px rgba(0,0,0,0.4);
+        }
+        .hero-frame p {
+            font-size: 1.25rem; max-width: 60ch; margin: 0 auto; opacity: 0.9;
+            color: var(--color-white); text-shadow: 0 1px 10px rgba(0,0,0,0.3);
+        }
+        
+       
+
+        /* ==========================================================================
+           4. Projects Page Layout
+           ========================================================================== */
+        .page-container {
+            margin-top: 100vh;
+            padding: 5rem 5%; 
+            max-width: 1400px; 
+            margin-left: auto;
+            margin-right: auto;
+            background-color: var(--color-castleton-green);
+        }
+        
+        /* ==========================================================================
+           5. Projects Grid & Card Styling
+           ========================================================================== */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            align-items: stretch; 
+        }
+        .project-card {
+            background-color: transparent;
+            border: 1px solid rgba(245, 238, 232, 0.15);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 179, 71, 0.5);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        .card-image-wrapper {
+            height: 400px; 
+            position: relative;
+            overflow: hidden;
+        }
+        .card-image-wrapper img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .project-card:hover .card-image-wrapper img {
+            transform: scale(1.05);
+        }
+        .card-content {
+            padding: 2rem;
+            flex-grow: 1; 
+            display: flex;
+            flex-direction: column;
+        }
+        .card-title {
+            font-family: var(--font-primary);
+            font-weight: 600;
+            font-size: 1.8rem;
+            color: var(--color-saffaron);
+            margin-bottom: 1rem;
+        }
+        .card-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--color-paper);
+            opacity: 0.85;
+            margin: 0;
+            max-width: none;
+        }
+        
+        /* ==========================================================================
+           6. Animation on Scroll
+           ========================================================================== */
+        .project-card {
+            opacity: 0; transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .project-card.is-visible { opacity: 1; transform: translateY(0); }
+        
+        /* ==========================================================================
+           7. CURSOR SPARKLE EFFECT
+           ========================================================================== */
+        .click-sparkle {
+            position: fixed; width: 25px; height: 25px;
+            border-radius: 50%; pointer-events: none; z-index: 9999;
+            transform: translate(-50%, -50%) scale(0);
+            animation: sparkle-animation 500ms forwards;
+        }
+        @keyframes sparkle-animation {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+        }
+
+        /* ==========================================================================
+           8. Footer
+           ========================================================================== */
+        .site-footer-new { background-color: #f5eedb; color: var(--color-dark-serpent); padding: 4rem 5%; border-top: 1px solid rgba(19, 48, 32, 0.1); }
+        .footer-container { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; max-width: 1600px; margin: 0 auto; gap: 2rem; }
+        .footer-column { flex: 1; min-width: 200px; padding: 0 15px; }
+        .footer-main { flex-basis: 30%; min-width: 250px; }
+        .footer-logo img { height: 45px; width: auto; margin-bottom: 1rem; }
+        .footer-contact-btn { display: inline-block; color: var(--color-dark-serpent); border: 2px solid var(--color-dark-serpent); padding: 0.6rem 2rem; border-radius: 50px; font-weight: 600; margin-top: 1.5rem; transition: all 0.2s ease; text-decoration: none; }
+        .footer-contact-btn:hover { background-color: var(--color-dark-serpent); color: #f5eedb; }
+        .footer-column h4 { color: var(--color-dark-serpent); margin-bottom: 1rem; font-weight: 600; font-size: 0.9rem; }
+        .footer-links ul { list-style: none; padding: 0; margin: 0; }
+        .footer-links li { margin-bottom: 0.75rem; }
+        .footer-links a { color: var(--color-dark-serpent); text-decoration: none; opacity: 0.8; transition: opacity 0.2s ease; }
+        .footer-links a:hover { opacity: 1; }
+        .footer-social { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+        .social-text { display: flex; flex-direction: column; line-height: 1.2; font-size: 0.8rem; letter-spacing: 0.1em; }
+        .social-icon-yt { width: 56px; height: 40px; }
+        .social-icon-yt rect { fill: #FF0000; stroke: none; }
+        .social-icon-yt path { fill: #FFFFFF; }
+        .social-icon-link:hover .social-icon-yt { opacity: 0.85; }
+
+        .social-icon-fb {
+            width: 40px;
+            height: 40px;
+        }
+        .social-icon-link:hover .social-icon-fb {
+            opacity: 0.85;
+        }
+
+        .be-amazed-logo { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; text-transform: uppercase; }
+        .logo-icon-footer { width: 14px; height: 24px; background: var(--color-saffaron); clip-path: var(--shape-logo-hexagon); display: inline-block; }
+
+
+        /* ==========================================================================
+           9. Responsive
+           ========================================================================== */
+        
+        @media (max-width: 992px) {
+            .mobile-nav-toggle { display: flex; }
+            
+            .main-nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 350px;
+                height: 100vh;
+                background-color: var(--color-paper);
+                padding-top: var(--header-height);
+                transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                z-index: 1050; 
+                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+                display: flex;
+            }
+
+            .main-nav.is-open {
+                right: 0;
+            }
+
+            .main-nav ul {
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding-top: 3rem;
+                width: 100%;
+                gap: 0;
+            }
+
+            .main-nav li {
+                width: 100%;
+                text-align: center;
+                border-bottom: 1px solid rgba(19, 48, 32, 0.1);
+            }
+
+            .main-nav li:first-child {
+                border-top: 1px solid rgba(19, 48, 32, 0.1);
+            }
+            
+            .main-nav a {
+                padding: 1.5rem 1rem;
+                font-size: 1rem;
+                width: 100%;
+                line-height: normal;
+                text-align: center;
+            }
+
+            .main-nav a:hover::after, .main-nav a.active::after {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-frame { padding: 2rem; }
+            .footer-container { flex-direction: column; text-align: center; align-items: center; }
+            .footer-column { min-width: 100%; margin-bottom: 2rem; padding: 0; }
+            .footer-social { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <a href="index.html" class="logo-link"><img src="logo.png" alt="Lifewood Company Logo"></a>
+        <nav class="main-nav" id="main-nav-container">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about us.html">About us</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="projects.html" class="active">Projects</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="mobile-nav-toggle" aria-controls="main-nav-container" aria-expanded="false">
+             <span class="sr-only">Menu</span>
+             <span class="dot"></span>
+             <span class="dot"></span>
+             <span class="dot"></span>
+        </button>
+    </header>
+
+    <section class="hero-section">
+        <video autoplay muted loop playsinline poster="transform.png" id="hero-video">
+            <source src="Generated File July 13, 2025 - 4_37PM.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="hero-frame">
+            <h1>Transforming Industries with AI</h1>
+            <p>Our capabilities are built on a foundation of cutting-edge technology and human ingenuity, designed to solve complex challenges and unlock new possibilities.</p>
+            <a href="#projects-content" class="scroll-down-arrow" aria-label="Scroll to content">
+                <span class="sr-only">Scroll down</span>
+            </a>
+        </div>
+    </section>
+
+    <main>
+        <div class="page-container" id="projects-content">
+            <div class="projects-grid">
+                
+                <div class="project-card">
+                    <div class="card-image-wrapper">
+                        <img src="data extraction.279Z.png" alt="Abstract visualization of AI data extraction">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">AI Data Extraction</h3>
+                        <p class="card-description">Using AI, we optimise the acquisition of image and text from any source. Our techniques include onsite scanning, drone photography, and forging alliances with archives, corporations, and governments.</p>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="card-image-wrapper">
+                        <img src="machine learning.078Z.png" alt="Neural network graphic for machine learning">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Machine Learning Enablement</h3>
+                        <p class="card-description">From simple data to deep learning, our solutions are highly flexible. We empower a wide variety of ML systems by providing the structured, high-quality data they need to perform, no matter how complex the model.</p>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="card-image-wrapper">
+                        <img src="genea.839Z.png" alt="Vintage family tree and documents for genealogy">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Genealogy</h3>
+                        <p class="card-description">Powered by AI, we process genealogical material at speed and scale to conserve and illuminate family histories, national archives, and corporate records in any language, age, or condition.</p>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="card-image-wrapper">
+                        <img src="nlp.jpg" alt="Soundwaves and text showing natural language processing">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Natural Language Processing</h3>
+                        <p class="card-description">We partner with the world’s most advanced companies in NLP. With a managed workforce that spans the globe, we offer solutions with over 50 language capabilities to power next-generation text and speech models.</p>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="card-image-wrapper">
+                        <img src="enabled.325Z.png" alt="Customer service agent with AI interface overlay">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">AI-Enabled Customer Service</h3>
+                        <p class="card-description">AI-enabled customer service is the most effective route for delivering personalized, proactive experiences that drive real engagement. We help institutions build and deploy intelligent support systems.</p>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="card-image-wrapper">
+                        <img src="computer.jpg" alt="Grid of images with bounding boxes for computer vision">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Computer Vision</h3>
+                        <p class="card-description">Training AI to see and understand the world requires a high volume of quality training data. We provide total data solutions for your CV development, from collection and annotation to classification.</p>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="card-image-wrapper">
+                        <img src="driving.228Z.png" alt="Futuristic car interior showing autonomous driving technology">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Autonomous Driving</h3>
+                        <p class="card-description">At Lifewood, innovation drives us continually forward. This is especially true of our contribution to the development of Autonomous Driving Technology, providing the critical data that makes self-driving vehicles a reality.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer-new">
+        <div class="footer-container">
+            <div class="footer-column footer-main">
+                <a href="index.html" class="footer-logo"><img src="logo.png" alt="Lifewood Logo"></a>
+                <p>Architects of transformative technology, bridging cultures and industries.</p>
+                <a href="contact.html" class="footer-contact-btn">Contact us</a>
+            </div>
+            <div class="footer-column footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about us.html">About Us</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                </ul>
+            </div>
+           <div class="footer-column footer-connect">
+                <h4>Connect With Us</h4>
+                <div class="footer-social">
+                    <a href="https://www.facebook.com/LifewoodPH" target="_blank" class="social-icon-link" aria-label="Lifewood on Facebook">
+                        <svg class="social-icon-fb" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="40" height="40" rx="8" fill="#1877F2"/>
+                            <path d="M24.43 32.22V20.84h3.86l.58-4.48h-4.44v-2.86c0-1.3.36-2.18 2.22-2.18h2.37v-4c-.41-.05-1.82-.18-3.46-.18-3.42 0-5.76 2.09-5.76 5.92v3.3H16v4.48h3.86v11.38h4.57z" fill="#FFFFFF"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.youtube.com/@LifewoodDataTechnology/videos" target="_blank" class="social-icon-link">
+                        <svg class="social-icon-yt" viewBox="0 0 56 40" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="1" y="1" width="54" height="38" rx="8" fill="#FF0000"/><path d="M37.25 19.9998L24.5 27.7998V12.1998L37.25 19.9998Z" fill="#FFFFFF"/></svg>
+                    </a>
+                </div>
+                <div class="be-amazed-logo">BE AMAZED<i class="logo-icon-footer"></i></div>
+            </div>
+        </div>
+    </footer>
+          <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // --- Mobile Navigation Script ---
+            const navToggle = document.querySelector('.mobile-nav-toggle');
+            const mainNav = document.querySelector('.main-nav'); 
+
+            navToggle.addEventListener('click', () => {
+                const isOpen = mainNav.classList.toggle('is-open');
+                navToggle.setAttribute('aria-expanded', isOpen);
+                document.body.classList.toggle('nav-open');
+            });
+
+            // --- UPDATED SCRIPT for Scroll Arrow ---
+            // This block of code makes the scroll arrow work when clicked.
+            const scrollArrow = document.querySelector('.scroll-down-arrow');
+            if (scrollArrow) {
+                scrollArrow.addEventListener('click', function(event) {
+                    // Prevent the default anchor link behavior to ensure smooth scroll.
+                    event.preventDefault(); 
+                    
+                    // Get the destination ID from the link's href attribute.
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+
+                    // If the destination element exists, scroll to it smoothly.
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+
+                    // This part adds a visual effect to the arrow on click.
+                    this.classList.add('clicked');
+                    setTimeout(() => {
+                        this.classList.remove('clicked');
+                    }, 1000); 
+                });
+            }
+
+            /* --- THE EXTRA JAVASCRIPT for .scroll-down-link has been removed --- */
+
+            // Scroll animation observer
+            const animatedElements = document.querySelectorAll('.project-card');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.transitionDelay = `${index * 100}ms`;
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            animatedElements.forEach(el => observer.observe(el));
+            
+            // Cursor Sparkle Effect
+            const sparkleColors = ['#f5eee8', '#ffb347', '#046241', '#133020', '#ffffff'];
+
+            document.body.addEventListener('mousedown', function(e) {
+                if (e.clientX >= document.documentElement.clientWidth) return;
+
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('click-sparkle');
+                sparkle.style.left = `${e.clientX}px`;
+                sparkle.style.top = `${e.clientY}px`;
+                sparkle.style.backgroundColor = sparkleColors[Math.floor(Math.random() * sparkleColors.length)];
+                document.body.appendChild(sparkle);
+
+                setTimeout(() => {
+                    sparkle.remove();
+                }, 500);
+            });
+        });
+    </script>
+</body>
+</html>

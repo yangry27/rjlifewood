@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Lifewood</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- General & Root Styles --- */
+        :root {
+            --dark-serpent: #133020;
+            --castleton-green: #046241;
+            --saffaron: #ffb347;
+            --paper: #f5eedb;
+            --paper-transparent: rgba(245, 238, 219, 0.1); 
+            --sea-salt: #F8F7F7;
+            --white: #ffffff;
+            --font-family: 'Manrope', sans-serif;
+            --header-height: 85px;
+            --shape-logo-hexagon: polygon(50% 0%, 100% 20%, 100% 80%, 50% 100%, 0% 80%, 0% 20%);
+        }
+
+        body {
+            font-family: var(--font-family);
+            margin: 0;
+            padding: 0;
+            color: var(--dark-serpent);
+            background-color: var(--white);
+            line-height: 1.6;
+            font-weight: 400;
+        }
+        
+        body.nav-open {
+            overflow: hidden;
+        }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-family);
+            color: var(--dark-serpent);
+            font-weight: 600;
+            margin-top: 0;
+            text-wrap: balance;
+        }
+        
+        h2 { text-align: center; font-size: 2.8rem; margin-bottom: 50px; }
+        h3 { font-size: 1.5rem; font-weight: 500; color: var(--castleton-green); }
+
+        /* --- Header & Navigation --- */
+        .site-header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 5%; height: var(--header-height);
+            background: var(--white);
+            backdrop-filter: blur(1px);
+            -webkit-backdrop-filter: blur(1px);
+            border-bottom: 1px solid rgba(19, 48, 32, 0.1);
+            box-sizing: border-box; 
+        }
+
+        .logo-link img { height: 100px; width: auto; }
+
+        .main-nav ul { margin: 0; padding: 0; list-style: none; display: flex; gap: 1rem; justify-content: flex-end; }
+        
+        .main-nav a {
+            color: var(--dark-serpent);
+            text-decoration: none; font-weight: 500; font-size: 1.1rem;
+            padding: 0.5rem 1rem; position: relative;
+        }
+        .main-nav a::after {
+            content: ''; position: absolute; width: 80%; height: 2px;
+            bottom: 0; left: 50%;
+            background-color: var(--castleton-green);
+            transform: translateX(-50%) scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        .main-nav a:hover::after, .main-nav a.active::after { transform: translateX(-50%) scaleX(1); }
+        
+        .mobile-nav-toggle {
+            display: none;
+            z-index: 1100;
+            position: relative;
+            width: 30px;
+            height: 28px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .dot {
+            display: block;
+            width: 5px;
+            height: 5px;
+            background-color: var(--dark-serpent);
+            border-radius: 50%;
+        }
+
+        /* --- Hero Section with Video Background --- */
+        .hero {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+        .hero-video {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); min-width: 100%;
+            min-height: 100%; width: auto; height: auto; z-index: -2;
+            object-fit: cover;
+        }
+        .hero::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%;
+            height: 100%; background-color: rgba(19, 48, 32, 0.6); z-index: -1;
+        }
+        .hero-text h1 {
+            font-size: 3.8rem; color: var(--white); font-weight: 700;
+            line-height: 1.2; margin-bottom: 20px;
+        }
+        .hero-text .subtitle { font-size: 1.2rem; font-weight: 400; color: rgba(255, 255, 255, 0.9); }
+
+        /* --- Content Sections --- */
+        section { padding: 80px 0; }
+        .bg-light { background-color: var(--sea-salt); }
+        .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .content-image { 
+            position: relative; width: 100%; height: 100%; 
+            border-radius: 8px; overflow: hidden; 
+        }
+        .mission-video { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .video-overlay-text {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); z-index: 2; 
+            color: var(--white); font-size: 2.5rem; font-weight: 700;
+            text-align: center; pointer-events: none; 
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+            width: 100%; 
+        }
+        
+        /* --- Glowing Box Style --- */
+        .glow-box {
+            max-width: 800px;
+            padding: 40px 50px;
+            border-radius: 12px;
+            position: relative;
+            background-color: var(--paper-transparent);
+            backdrop-filter: blur(1px);
+            -webkit-backdrop-filter: blur(1px);
+            border: 1px solid rgba(255, 179, 71, 0.4);
+            box-shadow: 0 0 25px rgba(255, 179, 71, 0.5);
+            animation: glow-pulse 4s infinite ease-in-out;
+        }
+
+        @keyframes glow-pulse {
+            0% { box-shadow: 0 0 20px rgba(255, 179, 71, 0.4); }
+            50% { box-shadow: 0 0 35px rgba(255, 179, 71, 0.7); }
+            100% { box-shadow: 0 0 20px rgba(255, 179, 71, 0.4); }
+        }
+
+        .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .feature-card {
+            text-align: center; background: var(--white); padding: 40px 30px;
+            border-radius: 8px; box-shadow: 0 5px 25px rgba(0, 0, 0, 0.07);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); }
+        .feature-card h3 { margin-top: 0; margin-bottom: 15px; }
+        .feature-video-circle {
+            width: 140px; height: 140px; margin: 0 auto 30px auto;
+            border-radius: 50%; overflow: hidden; border: 4px solid var(--white);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); position: relative; background-color: #e0e0e0;
+        }
+        .feature-video-circle video { width: 100%; height: 100%; object-fit: cover; }
+        .cta-section {
+            background-color: var(--castleton-green); color: var(--white);
+            text-align: center; padding: 60px 0;
+        }
+        .cta-section h2 { color: var(--white); }
+        .cta-button {
+            display: inline-block; background-color: var(--saffaron); color: var(--dark-serpent);
+            padding: 15px 40px; text-decoration: none; border-radius: 50px;
+            font-weight: 600; margin-top: 20px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        .cta-button:hover { background-color: #FFC370; transform: translateY(-3px); }
+
+        /* --- Footer Styles --- */
+        .site-footer-new {
+            background-color: var(--paper); color: var(--dark-serpent);
+            padding: 4rem 5%; border-top: 1px solid rgba(19, 48, 32, 0.1);
+        }
+        .footer-container { 
+            display: flex; flex-wrap: wrap; justify-content: space-between; 
+            align-items: flex-start; max-width: 1600px; margin: 0 auto; gap: 2rem; 
+        }
+        .footer-column { flex: 1; min-width: 200px; padding: 0 15px; }
+        .footer-main { flex-basis: 30%; min-width: 250px; }
+        .footer-logo img { height: 45px; width: auto; margin-bottom: 1rem;}
+        .footer-contact-btn {
+            display: inline-block; color: var(--dark-serpent); border: 2px solid var(--dark-serpent);
+            padding: 0.6rem 2rem; border-radius: 50px; text-decoration: none;
+            font-weight: 600; margin-top: 1.5rem; transition: all 0.2s ease;
+        }
+        .footer-contact-btn:hover { background-color: var(--dark-serpent); color: var(--paper); }
+        .footer-column h4 { 
+            color: var(--dark-serpent); margin-bottom: 1rem; font-weight: 600; 
+            letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.9rem;
+        }
+        .footer-links ul { list-style: none; padding: 0; margin: 0; }
+        .footer-links li { margin-bottom: 0.75rem; }
+        .footer-links a { color: var(--dark-serpent); text-decoration: none; opacity: 0.8; transition: opacity 0.2s ease; }
+        .footer-links a:hover { opacity: 1; }
+        .footer-social { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+        .social-text { display: flex; flex-direction: column; line-height: 1.2; font-size: 0.8rem; letter-spacing: 0.1em; }
+        .social-icon-yt { width: 56px; height: 40px; }
+        .social-icon-yt rect { fill: #FF0000; stroke: none; }
+        .social-icon-yt path { fill: #FFFFFF; }
+        .social-icon-link:hover .social-icon-yt { opacity: 0.85; }
+        
+        .social-icon-fb {
+            width: 40px;
+            height: 40px;
+        }
+        .social-icon-link:hover .social-icon-fb {
+            opacity: 0.85;
+        }
+
+        .be-amazed-logo { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; text-transform: uppercase; }
+        .logo-icon-footer {
+            width: 14px; height: 24px; background: var(--saffaron);
+            clip-path: var(--shape-logo-hexagon); display: inline-block;
+        }
+
+        /* --- CURSOR SPARKLE EFFECT --- */
+        .click-sparkle {
+            position: fixed; width: 25px; height: 25px;
+            border-radius: 50%; pointer-events: none;
+            z-index: 9999; transform: translate(-50%, -50%) scale(0);
+            animation: sparkle-animation 500ms forwards;
+        }
+        @keyframes sparkle-animation {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 992px) {
+            .mobile-nav-toggle { 
+                display: flex;
+            }
+            
+            .main-nav > ul {
+                position: fixed;
+                top: 0;
+                right: 0;
+                width: 80%;
+                max-width: 350px;
+                height: 100vh;
+                background-color: var(--paper);
+                flex-direction: column;
+                align-items: flex-start; 
+                justify-content: flex-start;
+                padding-top: calc(var(--header-height) + 2rem);
+                gap: 0;
+                transform: translateX(100%);
+                transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+                box-shadow: -5px 0 25px rgba(0,0,0,0.2);
+            }
+            .main-nav > ul.is-open { 
+                transform: translateX(0); 
+            }
+            .main-nav li {
+                width: 100%;
+            }
+
+            .main-nav a { 
+                font-size: 1.2rem;
+                font-weight: 500; 
+                display: block;
+                width: 85%;
+                padding: 1rem 2.5rem; 
+                text-align: center; 
+                border-bottom: 1px solid rgba(19, 48, 32, 0.1);
+            }
+            
+            .main-nav li:first-child > a {
+                 border-top: 1px solid rgba(19, 48, 32, 0.1);
+            }
+            .main-nav a::after { 
+                display: none;
+            }
+
+            .feature-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 850px) {
+            h2 { font-size: 2.2rem; }
+            .hero-text h1 { font-size: 2.8rem; }
+            .content-grid { grid-template-columns: 1fr; }
+            .content-image.video-container { order: -1; margin-bottom: 30px; }
+            .video-overlay-text { font-size: 1.8rem; }
+
+            .footer-container { flex-direction: column; text-align: center; align-items: center; }
+            .footer-column { min-width: 100%; margin-bottom: 2rem; padding: 0; }
+            .footer-main { order: 1; }
+            .footer-links { order: 2; }
+            .footer-connect { order: 3; }
+            .footer-social { justify-content: center; }
+        }
+        
+        @media (max-width: 768px) {
+            .glow-box {
+                padding: 30px 25px;
+            }
+             .hero-text h1 { font-size: 2.2rem; }
+             .hero-text .subtitle { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <a href="index.html" class="logo-link">
+            <img src="logo.png" alt="Lifewood Logo">
+        </a>
+        <nav class="main-nav" id="main-nav-container">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about us.html" class="active">About us</a></li>
+                <li><a href="services.html">Service</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="mobile-nav-toggle" aria-controls="main-nav-container" aria-expanded="false">
+            <span class="sr-only">Menu</span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </button>
+    </header>
+    
+    <section class="hero">
+        <video autoplay loop muted playsinline class="hero-video">
+            <source src="Generated File July 14, 2025 - 10_11AM.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        
+        <div class="hero-text glow-box">
+            <h1>We are the architects of transformative technology.</h1>
+            <p class="subtitle">Lifewood is a proactive, global force dedicated to bridging cultures and industries through innovative, adaptive solutions.</p>
+        </div>
+        
+    </section>
+
+    <main>
+        <section id="our-mission" class="our-mission">
+            <div class="container content-grid">
+                <div class="mission-text">
+                    <h2>Our Mission: Evolve Relentlessly</h2>
+                    <p>Founded on the principle of being "always switch on, never off," Lifewood is determined to drive progress. We build purposeful technology that connects people and systems, creating a more inclusive and efficient global ecosystem.</p>
+                    <p>Our approach is explorative and tenacious. We don't just solve today's problems; we anticipate tomorrow's challenges, ensuring our partners are always ahead of the curve.</p>
+                </div>
+                <div class="content-image video-container">
+                    <video autoplay loop muted playsinline class="mission-video">
+                        <source src="Generated File July 14, 2025 - 11_01AM.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-overlay-text">Global Innovation</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="core-values bg-light">
+            <div class="container">
+                <h2>Our Core Values</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-video-circle">
+                            <video autoplay loop muted playsinline>
+                                <source src="Generated File July 14, 2025 - 2_32PM.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <h3>Innovative & Adaptive</h3>
+                        <p>We thrive on change and innovation. Our adaptive frameworks allow us to deliver solutions with speed and precision, tailored to the unique needs of a dynamic world.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-video-circle">
+                           <video autoplay loop muted playsinline>
+                                <source src="https://videos.pexels.com/video-files/853874/853874-sd_640_360_25fps.mp4" type="video/mp4">
+                           </video>
+                        </div>
+                        <h3>Proactive & Determined</h3>
+                        <p>We are a relentless force for our clients. We proactively identify opportunities and tackle challenges head-on with a determined, results-oriented mindset.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-video-circle">
+                           <video autoplay loop muted playsinline>
+                                <source src="Generated File July 14, 2025 - 11_11AM.mp4" type="video/mp4">
+                           </video>
+                        </div>
+                        <h3>Inclusive Global Culture</h3>
+                        <p>Our strength lies in our people. We foster an inclusive culture that bridges diverse perspectives to build trusted, robust technology for a global audience.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="our-capabilities">
+            <div class="container">
+                <h2>Our Core Capabilities</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-video-circle">
+                            <video autoplay loop muted playsinline>
+                                <source src="Generated File July 14, 2025 - 2_38PM.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <h3>AI Data Extraction</h3>
+                        <p>We optimize the acquisition of image and text from any source, using AI to turn unstructured data into valuable, queryable assets.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-video-circle">
+                            <video autoplay loop muted playsinline>
+                                <source src="Generated File July 14, 2025 - 2_44PM.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <h3>Machine Learning Enablement</h3>
+                        <p>We provide the structured, high-quality data that high-performance ML systems need to perform, from cleaning to feature engineering.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-video-circle">
+                            <video autoplay loop muted playsinline>
+                                <source src="Generated File July 14, 2025 - 2_49PM.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <h3>Natural Language Processing</h3>
+                        <p>With a global workforce and 50+ language capabilities, we power next-generation text and speech models for the world's most advanced NLP companies.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container">
+                <h2>Ready to Evolve With Us?</h2>
+                <p>Discover how our transformative solutions can propel your business forward.</p>
+                <a href="contact.html" class="cta-button">Partner With Lifewood</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer-new">
+        <div class="footer-container">
+            <div class="footer-column footer-main">
+                <a href="index.html" class="footer-logo">
+                    <img src="logo.png" alt="Lifewood Logo">
+                </a>
+                <p>Architects of transformative technology, bridging cultures and industries.</p>
+                <a href="contact.html" class="footer-contact-btn">Contact us</a>
+            </div>
+            <div class="footer-column footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about us.html">About Us</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                </ul>
+            </div>
+           <div class="footer-column footer-connect">
+                <h4>Connect With Us</h4>
+                <div class="footer-social">
+                    <a href="https://www.facebook.com/LifewoodPH" target="_blank" class="social-icon-link" aria-label="Lifewood on Facebook">
+                        <svg class="social-icon-fb" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="40" height="40" rx="8" fill="#1877F2"/>
+                            <path d="M24.43 32.22V20.84h3.86l.58-4.48h-4.44v-2.86c0-1.3.36-2.18 2.22-2.18h2.37v-4c-.41-.05-1.82-.18-3.46-.18-3.42 0-5.76 2.09-5.76 5.92v3.3H16v4.48h3.86v11.38h4.57z" fill="#FFFFFF"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.youtube.com/@LifewoodDataTechnology/videos" target="_blank" class="social-icon-link" aria-label="Lifewood on YouTube">
+                        <svg class="social-icon-yt" viewBox="0 0 56 40" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="1" y="1" width="54" height="38" rx="8" fill="#FF0000"/>
+                            <path d="M37.25 19.9998L24.5 27.7998V12.1998L37.25 19.9998Z" fill="#FFFFFF"/>
+                        </svg>
+                    </a>
+                   
+                </div>
+                <div class="be-amazed-logo">BE AMAZED<i class="logo-icon-footer"></i></div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // --- CURSOR SPARKLE EFFECT SCRIPT ---
+            const sparkleColors = ['#f5eedb', '#ffb347', '#046241', '#133020', '#ffffff'];
+            document.body.addEventListener('mousedown', function(e) {
+                if (e.target.closest('a, button')) { return; }
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('click-sparkle');
+                sparkle.style.left = `${e.clientX}px`;
+                sparkle.style.top = `${e.clientY}px`;
+                const randomColor = sparkleColors[Math.floor(Math.random() * sparkleColors.length)];
+                sparkle.style.backgroundColor = randomColor;
+                document.body.appendChild(sparkle);
+                setTimeout(() => { sparkle.remove(); }, 500);
+            });
+
+            // --- Mobile Navigation ---
+            const navToggle = document.querySelector('.mobile-nav-toggle');
+            const mainNavList = document.querySelector('.main-nav > ul');
+            
+            navToggle.addEventListener('click', () => {
+                const isOpen = mainNavList.classList.toggle('is-open');
+                navToggle.setAttribute('aria-expanded', isOpen);
+                document.body.classList.toggle('nav-open');
+            });
+        });
+    </script>
+</body>
+</html>

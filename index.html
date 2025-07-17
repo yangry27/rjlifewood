@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lifewood - The Spark Beyond</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        /*
+          Lifewood - Official Brand Stylesheet (Complete & Unified)
+        */
+
+        /* ==========================================================================
+           1. CSS Custom Properties
+           ========================================================================== */
+        :root {
+            --color-paper: #f5eedb;
+            --color-white: #ffffff;
+            --color-sea-salt: #f9f7f7;
+            --color-dark-serpent: #133020;
+            --color-castleton-green: #046241;
+            --color-saffaron: #FFB347;
+            --color-earth-yellow: #FFC370;
+            --font-primary: 'Manrope', sans-serif;
+            --font-serif: 'Playfair Display', serif;
+            --font-weight-regular: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 600;
+            --header-height: 85px;
+            --border-radius: 8px;
+            --transition-fast: 0.2s ease-in-out;
+            --transition-medium: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --transition-smooth: 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+            --shape-logo-hexagon: polygon(50% 0%, 100% 20%, 100% 80%, 50% 100%, 0% 80%, 0% 20%);
+        }
+
+        /* ==========================================================================
+           2. Base & Reset Styles
+           ========================================================================== */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body {
+            background-color: var(--color-paper);
+            color: var(--color-dark-serpent);
+            font-family: var(--font-primary);
+            font-weight: var(--font-weight-regular);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+            opacity: 0;
+            transition: opacity 0.4s ease-in;
+            letter-spacing: 0.015em;
+        }
+        body.is-loaded { opacity: 1; }
+        body.no-scroll { overflow: hidden; }
+
+        h1, h2, h3, h4 { color: var(--color-dark-serpent); line-height: 1.2; text-wrap: balance; }
+        h1, h2 { font-weight: var(--font-weight-semibold); }
+        h3, h4 { font-weight: var(--font-weight-medium); }
+        h1 { font-size: clamp(2.8rem, 7vw, 4.5rem); }
+        h2 { font-size: clamp(2rem, 5vw, 3rem); }
+        h4 { font-size: 1.25rem; }
+        p { margin-bottom: 1rem; max-width: 65ch; }
+        a { color: var(--color-castleton-green); text-decoration: none; transition: color var(--transition-fast); font-weight: var(--font-weight-medium); }
+        a:hover { color: var(--color-dark-serpent); }
+        img, video { max-width: 100%; height: auto; display: block; }
+
+      /* ==========================================================================
+        3. Header & Navigation
+      ========================================================================== */
+      .site-header {
+          position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+          display: flex; justify-content: space-between; align-items: center;
+          padding: 0 5%; height: var(--header-height);
+          background: var(--color-white);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          border-bottom: 1px solid rgba(19, 48, 32, 0.1);
+      }
+      .logo-link { display: flex; align-items: center; flex-shrink: 0; }
+      .logo-link img { height: 100px; width: auto; transition: transform var(--transition-medium); }
+      .logo-link:hover img { transform: scale(1.05); }
+
+      .main-nav { flex-grow: 1; display: flex; justify-content: flex-end; }
+      .main-nav ul { list-style: none; display: flex; justify-content: space-around; width: 100%; max-width: 650px; }
+      .main-nav a {
+          color: var(--color-dark-serpent); font-weight: var(--font-weight-medium);
+          font-size: 1rem; padding: 0.5rem 1rem; position: relative;
+          display: block; text-align: center; white-space: nowrap;
+      }
+      .main-nav a::after {
+          content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px;
+          background-color: var(--color-castleton-green); transform: scaleX(0);
+          transform-origin: center; transition: transform var(--transition-medium);
+      }
+      .main-nav a:hover::after { transform: scaleX(1); }
+
+      .mobile-nav-toggle {
+          display: none;
+          flex-direction: column;
+          justify-content: space-around;
+          width: 30px;
+          height: 30px;
+          background: transparent;
+          border: none;
+          cursor: pointer;
+          padding: 0;
+          z-index: 1001;
+      }
+      .mobile-nav-toggle .dot {
+          display: block;
+          width: 5px;
+          height: 5px;
+          background-color: var(--color-dark-serpent);
+          border-radius: 50%;
+          margin: 0 auto;
+      }
+      
+        /* ... All other sections (4-8) remain exactly the same ... */
+        .hero-section { height: 100vh; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 2rem; overflow: hidden; margin-top: calc(-1 * var(--header-height)); }
+        .hero-video { position: absolute; top: 50%; left: 50%; width: 100%; height: 100%; object-fit: cover; transform: translate(-50%, -50%); z-index: -2; }
+        .hero-section::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(19, 48, 32, 0.5); z-index: -1; }
+        .hero-content { margin-top: var(--header-height); }
+        .hero-content h1, .hero-content p { opacity: 0; transform: translateY(25px); transition: opacity var(--transition-smooth), transform var(--transition-smooth); }
+        .is-loaded .hero-content h1 { opacity: 1; transform: translateY(0); transition-delay: 0.4s; }
+        .is-loaded .hero-content p { opacity: 1; transform: translateY(0); transition-delay: 0.6s; }
+        .hero-content h1 { color: var(--color-white); text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .hero-content p { font-size: 1.25rem; color: var(--color-paper); font-weight: var(--font-weight-regular); max-width: 600px; margin-top: 1rem; text-shadow: 0 1px 8px rgba(0,0,0,0.5); }
+        .scroll-down { position: absolute; bottom: 40px; font-size: 2rem; color: var(--color-white); animation: bounce 2s infinite; }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-15px); } 60% { transform: translateY(-7px); } }
+        main { margin-top: var(--header-height); } .content-section { padding: 8rem 5%; } .alternate-bg { background-color: var(--color-sea-salt); } .cta-button { display: inline-block; background: var(--color-saffaron); color: var(--color-dark-serpent); padding: 0.8rem 2.5rem; border-radius: 50px; font-weight: var(--font-weight-semibold); transition: background-color var(--transition-fast), transform var(--transition-fast); margin-top: 2rem; border: 2px solid var(--color-saffaron); }
+        .cta-button:hover { background: var(--color-earth-yellow); border-color: var(--color-earth-yellow); transform: translateY(-3px); color: var(--color-dark-serpent); }
+        .dual-focus-section { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: flex-start; max-width: 1200px; margin: 0 auto; }
+        .focus-column > * { opacity: 0; transform: translateY(30px); transition: opacity var(--transition-smooth), transform var(--transition-smooth); }
+        .focus-column.is-visible > * { opacity: 1; transform: translateY(0); transition-delay: var(--stagger-delay, 0s); }
+        .section-title-wrapper { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem; }
+        .section-title-wrapper.centered { justify-content: center; }
+        .title-hexagon { flex-shrink: 0; width: 24px; height: 40px; background-color: var(--color-saffaron); clip-path: var(--shape-logo-hexagon); }
+        .title-hexagon.large { width: 36px; height: 60px; }
+        .focus-column h2 { font-family: var(--font-primary); font-weight: var(--font-weight-semibold); font-size: clamp(2rem, 5vw, 2.5rem); line-height: 1.2; margin-bottom: 0; text-transform: none; }
+        .focus-column p { font-size: 1.05rem; line-height: 1.8; }
+        .focus-column .column-image { border-radius: var(--border-radius); margin-bottom: 2.5rem; box-shadow: 0 5px 15px rgba(19, 48, 32, 0.05), 0 15px 35px rgba(19, 48, 32, 0.07); overflow: hidden; transform: scale(1.1); clip-path: inset(0 0 100% 0); transition: opacity var(--transition-smooth), clip-path var(--transition-smooth), transform var(--transition-smooth); }
+        .focus-column.is-visible .column-image { clip-path: inset(0 0 0% 0); transform: scale(1); }
+        .focus-column .column-image img, .focus-column .column-image video { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin-top: 2.5rem; }
+        .stat-item .stat-number { font-size: clamp(2rem, 5vw, 2.5rem); font-weight: var(--font-weight-semibold); color: var(--color-castleton-green); line-height: 1; }
+        .stat-item .stat-label { color: #5c6c64; font-size: 0.9rem; margin: 0; }
+        
+        .gallery-section { 
+            padding: 8rem 5%;
+            background-color: var(--color-castleton-green);
+        }
+        .gallery-section .gallery-intro h2,
+        .gallery-section .gallery-intro p {
+            color: var(--color-paper);
+        }
+
+        .gallery-intro { text-align: center; max-width: 700px; margin: 0 auto 4rem auto; }
+        .gallery-intro .section-title-wrapper { margin-bottom: 1.5rem; }
+        .gallery-intro h2 { font-family: var(--font-primary); font-size: clamp(3rem, 10vw, 6rem); font-weight: var(--font-weight-semibold); line-height: 1; color: var(--color-dark-serpent); margin-bottom: 0; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; max-width: 1400px; margin: 0 auto; }
+        .gallery-item { overflow: hidden; border-radius: var(--border-radius); box-shadow: 0 5px 15px rgba(19, 48, 32, 0.07); transition: transform 0.4s var(--transition-smooth), box-shadow 0.4s var(--transition-smooth); }
+        .gallery-item img, .gallery-item video { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .gallery-item:hover { transform: translateY(-10px); box-shadow: 0 15px 35px rgba(19, 48, 32, 0.15); }
+        .gallery-item:hover img, .gallery-item:hover video { transform: scale(1.05); }
+        
+        .site-footer-new { background-color: var(--color-paper); color: var(--color-dark-serpent); padding: 4rem 5%; border-top: 1px solid rgba(19, 48, 32, 0.1); }
+        .footer-container { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; max-width: 1600px; margin: 0 auto; gap: 2rem; }
+        .footer-column { flex: 1; min-width: 200px; padding: 0 15px; }
+        .footer-main { flex-basis: 30%; min-width: 250px; }
+        .footer-logo img { height: 45px; width: auto; margin-bottom: 1rem;}
+        .footer-contact-btn { display: inline-block; color: var(--color-dark-serpent); border: 2px solid var(--color-dark-serpent); padding: 0.6rem 2rem; border-radius: 50px; text-decoration: none; font-weight: var(--font-weight-semibold); margin-top: 1.5rem; transition: all 0.2s ease; }
+        .footer-contact-btn:hover { background-color: var(--color-dark-serpent); color: var(--color-paper); }
+        .footer-column h4 { color: var(--color-dark-serpent); margin-bottom: 1rem; font-weight: var(--font-weight-semibold); font-size: 0.9rem; }
+        .footer-links ul { list-style: none; padding: 0; margin: 0; }
+        .footer-links li { margin-bottom: 0.75rem; }
+        .footer-links a { color: var(--color-dark-serpent); text-decoration: none; opacity: 0.8; transition: opacity 0.2s ease; font-weight: var(--font-weight-regular); }
+        .footer-links a:hover { opacity: 1; }
+        .footer-social { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+        .social-text { display: flex; flex-direction: column; line-height: 1.2; font-size: 0.8rem; letter-spacing: 0.1em; }
+        .social-icon-yt { width: 56px; height: 40px; }
+        .social-icon-yt rect { fill: #FF0000; stroke: none; }
+        .social-icon-yt path { fill: #FFFFFF; }
+        .social-icon-link:hover .social-icon-yt { opacity: 0.85; }
+        
+        /* --- ADDED CSS for Facebook Icon --- */
+        .social-icon-fb {
+            width: 40px;
+            height: 40px;
+        }
+        .social-icon-link:hover .social-icon-fb {
+            opacity: 0.85;
+        }
+        /* --- END ADDED CSS --- */
+
+        .be-amazed-logo { display: inline-flex; align-items: center; gap: 10px; font-weight: var(--font-weight-semibold); text-transform: uppercase; }
+        .logo-icon-footer { width: 14px; height: 24px; background: var(--color-saffaron); clip-path: var(--shape-logo-hexagon); display: inline-block; }
+        .click-sparkle { position: fixed; width: 25px; height: 25px; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%) scale(0); animation: sparkle-animation 500ms forwards; }
+        @keyframes sparkle-animation { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(0); opacity: 0; } }
+        
+        /* Style for the active navigation link */
+        .main-nav a.active {
+            font-weight: var(--font-weight-semibold); /* Makes text bolder */
+        }
+        
+        /* Desktop active style: persistent underline */
+        @media (min-width: 769px) {
+            .main-nav a.active::after {
+                transform: scaleX(1);
+            }
+        }
+        
+        /* ==========================================================================
+           10. Responsive Design
+           ========================================================================== */
+        @media (max-width: 1024px) {
+            .dual-focus-section { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            html { font-size: 15px; }
+
+            .mobile-nav-toggle { display: flex; }
+            .main-nav {
+                position: fixed; top: 0; right: -100%;
+                width: 80%; max-width: 320px; height: 100vh;
+                background-color: var(--color-paper);
+                padding-top: var(--header-height);
+                transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                z-index: 999; box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+                display: flex; 
+            }
+            .main-nav.is-open { right: 0; }
+            .main-nav ul {
+                flex-direction: column; justify-content: flex-start;
+                align-items: center; padding-top: 3rem; width: 100%;
+            }
+            .main-nav li {
+                width: 100%; text-align: center;
+                border-bottom: 1px solid rgba(19, 48, 32, 0.1);
+            }
+            .main-nav li:first-child {
+                border-top: 1px solid rgba(19, 48, 32, 0.1);
+            }
+            .main-nav a { padding: 1.5rem 1rem; font-size: 1.2rem; width: 100%; }
+            .main-nav a::after { display: none; }
+
+            .main-nav a.active {
+                background-color: transparent; /* Explicitly set to transparent */
+            }
+
+            .footer-container { 
+                flex-direction: column; text-align: center; align-items: center; 
+            }
+            .footer-column { 
+                min-width: 100%; margin-bottom: 2rem; padding: 0; 
+            }
+            .footer-main { order: 1; }
+            .footer-links { order: 2; }
+            .footer-connect { order: 3; }
+            .footer-social { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <a href="index.html" class="logo-link">
+            <img src="logo.png" alt="Lifewood Logo">
+        </a>
+        
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about us.html">About us</a></li>
+                <li><a href="services.html">Service</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+
+        <button class="mobile-nav-toggle" aria-label="Open navigation menu">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </button>
+    </header>
+
+    <main>
+        <section class="hero-section" id="home">
+            <video playsinline autoplay muted loop class="hero-video"><source src="video.mp4" type="video/mp4"></video>
+            <div class="hero-content"><h1>The Spark Beyond</h1><p>Illuminating the Human Spirit with Artificial Intelligence</p></div>
+            <a href="#core-focus" class="scroll-down" aria-label="Scroll down">↓</a>
+        </section>
+        <section class="content-section alternate-bg fade-in-section" id="core-focus">
+            <div class="dual-focus-section">
+                <div class="focus-column" id="genealogy" data-stagger>
+                    <div class="section-title-wrapper"><span class="title-hexagon"></span><h2>Genealogy</h2></div>
+                    <div class="column-image"><img src="photo.jpeg" alt="A collage of historical portraits and handwritten documents representing genealogy."></div>
+                    <p>Powered by AI, Lifewood processes genealogical material at speed and scale, to conserve and illuminate family histories, national archives, corporate lists and records of all types.</p>
+                    <p>Lifewood has more than 18 years of experience capturing, scanning and processing genealogical data. In fact, Lifewood started with genealogy data as its core business, so that over the years we have accumulated vast knowledge in diverse types of genealogy indexing.</p>
+                </div>
+                <div class="focus-column" id="global-footprint" data-stagger>
+                    <div class="section-title-wrapper"><span class="title-hexagon"></span><h2>Global Scale</h2></div>
+                    <div class="column-image"><video playsinline autoplay muted loop><source src="map.mp4" type="video/mp4"></video></div>
+                    <p>From Benin to Britain, Singapore to Seattle, Lifewood operates globally to build bridges, ignite innovation, and capture the diverse human experience for communities everywhere.</p>
+                    <div class="stats-grid">
+                        <div class="stat-item"><span class="stat-number">34,738</span><p class="stat-label">Devoted Specialists</p></div>
+                        <div class="stat-item"><span class="stat-number">25</span><p class="stat-label">Delivery Sites</p></div>
+                        <div class="stat-item"><span class="stat-number">16</span><p class="stat-label">Countries</p></div>
+                        <div class="stat-item"><span class="stat-number">50+</span><p class="stat-label">Languages</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="gallery-section fade-in-section" id="be-amazed">
+            <div class="gallery-intro" data-stagger>
+                <div class="section-title-wrapper centered"><span class="title-hexagon large"></span><h2>Be Amazed</h2></div>
+                <p>Beyond the data and algorithms lies the human story. We find the spark of creativity, the depth of experience, and the infinite potential that connects us all.</p>
+            </div>
+            <div class="gallery-grid" data-stagger>
+                <div class="gallery-item item-1"><video playsinline autoplay muted loop><source src="Generated File July 14, 2025 - 11_11AM.mp4" type="video/mp4"></video></div>
+                <div class="gallery-item item-2"><video playsinline autoplay muted loop><source src="Generated File July 14, 2025 - 11_13AM.mp4" type="video/mp4"></video></div>
+                <div class="gallery-item item-3"><video playsinline autoplay muted loop><source src="Generated File July 14, 2025 - 11_18AM.mp4" type="video/mp4"></video></div>
+                <div class="gallery-item item-4"><video playsinline autoplay muted loop><source src="m.mp4" type="video/mp4"></video></div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer-new" id="contact-footer">
+        <div class="footer-container">
+            <!-- Column 1: Main Info -->
+            <div class="footer-column footer-main">
+                <a href="index.html" class="footer-logo">
+                    <img src="logo.png" alt="Lifewood Logo">
+                </a>
+                <p>Architects of transformative technology, bridging cultures and industries.</p>
+                <a href="contact.html" class="footer-contact-btn">Contact us</a>
+            </div>
+
+            <!-- Column 2: Quick Links -->
+            <div class="footer-column footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about us.html">About Us</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 3: Social & Brand -->
+           <div class="footer-column footer-connect">
+                <h4>Connect With Us</h4>
+                <div class="footer-social">
+                    <!-- ADDED: Facebook Icon -->
+                    <a href="https://www.facebook.com/LifewoodPH" target="_blank" class="social-icon-link" aria-label="Lifewood on Facebook">
+                        <svg class="social-icon-fb" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="40" height="40" rx="8" fill="#1877F2"/>
+                            <path d="M24.43 32.22V20.84h3.86l.58-4.48h-4.44v-2.86c0-1.3.36-2.18 2.22-2.18h2.37v-4c-.41-.05-1.82-.18-3.46-.18-3.42 0-5.76 2.09-5.76 5.92v3.3H16v4.48h3.86v11.38h4.57z" fill="#FFFFFF"/>
+                        </svg>
+                    </a>
+                    <!-- END ADDED -->
+                    <a href="https://www.youtube.com/@LifewoodDataTechnology/videos" target="_blank" class="social-icon-link" aria-label="Lifewood on YouTube">
+                        <svg class="social-icon-yt" viewBox="0 0 56 40" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="1" y="1" width="54" height="38" rx="8" fill="#FF0000"/>
+                            <path d="M37.25 19.9998L24.5 27.7998V12.1998L37.25 19.9998Z" fill="#FFFFFF"/>
+                        </svg>
+                    </a>
+                   
+                </div>
+                <div class="be-amazed-logo">BE AMAZED<i class="logo-icon-footer"></i></div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Fade in the body to prevent a flash of unstyled content
+            document.body.classList.add('is-loaded');
+
+            // --- MOBILE NAVIGATION SCRIPT ---
+            const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+            const mainNav = document.querySelector('.main-nav');
+            const body = document.body;
+
+            mobileNavToggle.addEventListener('click', function() {
+                mainNav.classList.toggle('is-open');
+                body.classList.toggle('no-scroll');
+            });
+
+            // --- ACTIVE NAVIGATION LINK HIGHLIGHTER ---
+            const navLinks = document.querySelectorAll('.main-nav a');
+            const currentURL = window.location.href; 
+            let activeLinkFound = false;
+
+            navLinks.forEach(link => {
+                // The browser resolves `link.href` to a full URL, making comparison reliable
+                if (link.href === currentURL) {
+                    link.classList.add('active');
+                    activeLinkFound = true;
+                }
+            });
+
+            // Fallback for the homepage if the URL is just the root (e.g., ".../WEBSITE/")
+            if (!activeLinkFound && (currentURL.endsWith('/') || !currentURL.split('/').pop().includes('.'))) {
+                 const homeLink = document.querySelector('.main-nav a[href="index.html"]');
+                 if (homeLink) {
+                    homeLink.classList.add('active');
+                 }
+            }
+
+
+            // Scroll animation script
+            const animatedElements = document.querySelectorAll('.fade-in-section, [data-stagger], .focus-column');
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        if (entry.target.hasAttribute('data-stagger')) {
+                            const children = entry.target.querySelectorAll(':scope > *');
+                            children.forEach((child, index) => {
+                                child.style.setProperty('--stagger-delay', `${index * 150}ms`);
+                            });
+                        }
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            animatedElements.forEach(el => observer.observe(el));
+
+            // Cursor sparkle effect
+            const sparkleColors = ['#f5eedb', '#FFB347', '#046241', '#FFC370', '#133020'];
+            document.body.addEventListener('mousedown', function(e) {
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('click-sparkle');
+                sparkle.style.left = `${e.clientX}px`;
+                sparkle.style.top = `${e.clientY}px`;
+                const randomColor = sparkleColors[Math.floor(Math.random() * sparkleColors.length)];
+                sparkle.style.backgroundColor = randomColor;
+                document.body.appendChild(sparkle);
+                setTimeout(() => sparkle.remove(), 500);
+            });
+        });
+    </script>
+</body>
+</html>
