@@ -4,19 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lifewood - The Spark Beyond</title>
-    
+    <!-- All head content and <link> tags remain the same -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    
     <style>
-        /*
-          Lifewood - Official Brand Stylesheet (Complete & Unified)
-        */
-
-        /* ==========================================================================
-           1. CSS Custom Properties
-           ========================================================================== */
+        /* All your beautiful CSS remains the same... */
         :root {
             --color-paper: #f5eedb;
             --color-white: #ffffff;
@@ -25,6 +18,8 @@
             --color-castleton-green: #046241;
             --color-saffaron: #FFB347;
             --color-earth-yellow: #FFC370;
+            --color-accept-green: #28a745;
+            --color-reject-red: #dc3545;
             --font-primary: 'Manrope', sans-serif;
             --font-serif: 'Playfair Display', serif;
             --font-weight-regular: 400;
@@ -37,10 +32,6 @@
             --transition-smooth: 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000);
             --shape-logo-hexagon: polygon(50% 0%, 100% 20%, 100% 80%, 50% 100%, 0% 80%, 0% 20%);
         }
-
-        /* ==========================================================================
-           2. Base & Reset Styles
-           ========================================================================== */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; font-size: 16px; }
         body {
@@ -58,7 +49,6 @@
         }
         body.is-loaded { opacity: 1; }
         body.no-scroll { overflow: hidden; }
-
         h1, h2, h3, h4 { color: var(--color-dark-serpent); line-height: 1.2; text-wrap: balance; }
         h1, h2 { font-weight: var(--font-weight-semibold); }
         h3, h4 { font-weight: var(--font-weight-medium); }
@@ -69,59 +59,66 @@
         a { color: var(--color-castleton-green); text-decoration: none; transition: color var(--transition-fast); font-weight: var(--font-weight-medium); }
         a:hover { color: var(--color-dark-serpent); }
         img, video { max-width: 100%; height: auto; display: block; }
-
-      /* ==========================================================================
-        3. Header & Navigation
-      ========================================================================== */
-      .site-header {
-          position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
-          display: flex; justify-content: space-between; align-items: center;
-          padding: 0 5%; height: var(--header-height);
-          background: var(--color-white);
-          backdrop-filter: blur(10px);
-          -webkit-backdrop-filter: blur(10px);
-          border-bottom: 1px solid rgba(19, 48, 32, 0.1);
-      }
-      .logo-link { display: flex; align-items: center; flex-shrink: 0; }
-      .logo-link img { height: 100px; width: auto; transition: transform var(--transition-medium); }
-      .logo-link:hover img { transform: scale(1.05); }
-
-      .main-nav { flex-grow: 1; display: flex; justify-content: flex-end; }
-      .main-nav ul { list-style: none; display: flex; justify-content: space-around; width: 100%; max-width: 650px; }
-      .main-nav a {
-          color: var(--color-dark-serpent); font-weight: var(--font-weight-medium);
-          font-size: 1rem; padding: 0.5rem 1rem; position: relative;
-          display: block; text-align: center; white-space: nowrap;
-      }
-      .main-nav a::after {
-          content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px;
-          background-color: var(--color-castleton-green); transform: scaleX(0);
-          transform-origin: center; transition: transform var(--transition-medium);
-      }
-      .main-nav a:hover::after { transform: scaleX(1); }
-
-      .mobile-nav-toggle {
-          display: none;
-          flex-direction: column;
-          justify-content: space-around;
-          width: 30px;
-          height: 30px;
-          background: transparent;
-          border: none;
-          cursor: pointer;
-          padding: 0;
-          z-index: 1001;
-      }
-      .mobile-nav-toggle .dot {
-          display: block;
-          width: 5px;
-          height: 5px;
-          background-color: var(--color-dark-serpent);
-          border-radius: 50%;
-          margin: 0 auto;
-      }
-      
-        /* ... All other sections (4-8) remain exactly the same ... */
+        .site-header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 5%; height: var(--header-height);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(19, 48, 32, 0.1);
+        }
+        .logo-link { display: flex; align-items: center; flex-shrink: 0; }
+        .logo-link img { height: 100px; width: auto; transition: transform var(--transition-medium); }
+        .logo-link:hover img { transform: scale(1.05); }
+        .main-nav { flex-grow: 1; display: flex; justify-content: flex-end; }
+        .main-nav ul { list-style: none; display: flex; align-items: center; justify-content: space-around; width: 100%; max-width: 750px; }
+        .main-nav a {
+            color: var(--color-dark-serpent); font-weight: var(--font-weight-medium);
+            font-size: 1rem; padding: 0.5rem 1rem; position: relative;
+            display: block; text-align: center; white-space: nowrap;
+        }
+        .main-nav a::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px;
+            background-color: var(--color-castleton-green); transform: scaleX(0);
+            transform-origin: center; transition: transform var(--transition-medium);
+        }
+        .main-nav a:hover::after { transform: scaleX(1); }
+        .main-nav .nav-cta-item a {
+            background: var(--color-saffaron);
+            color: var(--color-dark-serpent);
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            transition: background-color var(--transition-fast), transform var(--transition-fast);
+        }
+        .main-nav .nav-cta-item a:hover {
+            background: var(--color-earth-yellow);
+            transform: translateY(-2px);
+            color: var(--color-dark-serpent);
+        }
+        .main-nav .nav-cta-item a::after {
+            display: none;
+        }
+        .mobile-nav-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 30px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1001;
+        }
+        .mobile-nav-toggle .dot {
+            display: block;
+            width: 5px;
+            height: 5px;
+            background-color: var(--color-dark-serpent);
+            border-radius: 50%;
+            margin: 0 auto;
+        }
         .hero-section { height: 100vh; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 2rem; overflow: hidden; margin-top: calc(-1 * var(--header-height)); }
         .hero-video { position: absolute; top: 50%; left: 50%; width: 100%; height: 100%; object-fit: cover; transform: translate(-50%, -50%); z-index: -2; }
         .hero-section::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(19, 48, 32, 0.5); z-index: -1; }
@@ -133,7 +130,7 @@
         .hero-content p { font-size: 1.25rem; color: var(--color-paper); font-weight: var(--font-weight-regular); max-width: 600px; margin-top: 1rem; text-shadow: 0 1px 8px rgba(0,0,0,0.5); }
         .scroll-down { position: absolute; bottom: 40px; font-size: 2rem; color: var(--color-white); animation: bounce 2s infinite; }
         @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-15px); } 60% { transform: translateY(-7px); } }
-        main { margin-top: var(--header-height); } .content-section { padding: 8rem 5%; } .alternate-bg { background-color: var(--color-sea-salt); } .cta-button { display: inline-block; background: var(--color-saffaron); color: var(--color-dark-serpent); padding: 0.8rem 2.5rem; border-radius: 50px; font-weight: var(--font-weight-semibold); transition: background-color var(--transition-fast), transform var(--transition-fast); margin-top: 2rem; border: 2px solid var(--color-saffaron); }
+        main { margin-top: var(--header-height); } .content-section { padding: 8rem 5%; } .alternate-bg { background-color: var(--color-sea-salt); } .cta-button { display: inline-block; background: var(--color-saffaron); color: var(--color-dark-serpent); padding: 0.8rem 2.5rem; border-radius: 50px; font-weight: var(--font-weight-semibold); transition: background-color var(--transition-fast), transform var(--transition-fast); margin-top: 2rem; border: 2px solid var(--color-saffaron); cursor: pointer; }
         .cta-button:hover { background: var(--color-earth-yellow); border-color: var(--color-earth-yellow); transform: translateY(-3px); color: var(--color-dark-serpent); }
         .dual-focus-section { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: flex-start; max-width: 1200px; margin: 0 auto; }
         .focus-column > * { opacity: 0; transform: translateY(30px); transition: opacity var(--transition-smooth), transform var(--transition-smooth); }
@@ -150,16 +147,8 @@
         .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin-top: 2.5rem; }
         .stat-item .stat-number { font-size: clamp(2rem, 5vw, 2.5rem); font-weight: var(--font-weight-semibold); color: var(--color-castleton-green); line-height: 1; }
         .stat-item .stat-label { color: #5c6c64; font-size: 0.9rem; margin: 0; }
-        
-        .gallery-section { 
-            padding: 8rem 5%;
-            background-color: var(--color-castleton-green);
-        }
-        .gallery-section .gallery-intro h2,
-        .gallery-section .gallery-intro p {
-            color: var(--color-paper);
-        }
-
+        .gallery-section { padding: 8rem 5%; background-color: var(--color-castleton-green); }
+        .gallery-section .gallery-intro h2, .gallery-section .gallery-intro p { color: var(--color-paper); }
         .gallery-intro { text-align: center; max-width: 700px; margin: 0 auto 4rem auto; }
         .gallery-intro .section-title-wrapper { margin-bottom: 1.5rem; }
         .gallery-intro h2 { font-family: var(--font-primary); font-size: clamp(3rem, 10vw, 6rem); font-weight: var(--font-weight-semibold); line-height: 1; color: var(--color-dark-serpent); margin-bottom: 0; }
@@ -168,7 +157,6 @@
         .gallery-item img, .gallery-item video { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
         .gallery-item:hover { transform: translateY(-10px); box-shadow: 0 15px 35px rgba(19, 48, 32, 0.15); }
         .gallery-item:hover img, .gallery-item:hover video { transform: scale(1.05); }
-        
         .site-footer-new { background-color: var(--color-paper); color: var(--color-dark-serpent); padding: 4rem 5%; border-top: 1px solid rgba(19, 48, 32, 0.1); }
         .footer-container { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; max-width: 1600px; margin: 0 auto; gap: 2rem; }
         .footer-column { flex: 1; min-width: 200px; padding: 0 15px; }
@@ -187,93 +175,124 @@
         .social-icon-yt rect { fill: #FF0000; stroke: none; }
         .social-icon-yt path { fill: #FFFFFF; }
         .social-icon-link:hover .social-icon-yt { opacity: 0.85; }
-        
-        /* --- ADDED CSS for Facebook Icon --- */
-        .social-icon-fb {
-            width: 40px;
-            height: 40px;
-        }
-        .social-icon-link:hover .social-icon-fb {
-            opacity: 0.85;
-        }
-        /* --- END ADDED CSS --- */
-
+        .social-icon-fb { width: 40px; height: 40px; }
+        .social-icon-link:hover .social-icon-fb { opacity: 0.85; }
         .be-amazed-logo { display: inline-flex; align-items: center; gap: 10px; font-weight: var(--font-weight-semibold); text-transform: uppercase; }
         .logo-icon-footer { width: 14px; height: 24px; background: var(--color-saffaron); clip-path: var(--shape-logo-hexagon); display: inline-block; }
         .click-sparkle { position: fixed; width: 25px; height: 25px; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%) scale(0); animation: sparkle-animation 500ms forwards; }
         @keyframes sparkle-animation { 0% { transform: translate(-50%, -50%) scale(0); opacity: 1; } 50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(0); opacity: 0; } }
+        .main-nav a.active { font-weight: var(--font-weight-semibold); }
+        @media (min-width: 769px) { .main-nav a.active::after { transform: scaleX(1); } }
         
-        /* Style for the active navigation link */
-        .main-nav a.active {
-            font-weight: var(--font-weight-semibold); /* Makes text bolder */
+        /* NEW: Global Notification Styles */
+        .global-notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translate(-50%, -150%); /* Start off-screen */
+            background-color: var(--color-castleton-green);
+            color: var(--color-white);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: transform 0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000), opacity 0.5s ease;
+            text-align: center;
+            font-weight: var(--font-weight-medium);
         }
-        
-        /* Desktop active style: persistent underline */
-        @media (min-width: 769px) {
-            .main-nav a.active::after {
-                transform: scaleX(1);
-            }
+        .global-notification.is-visible {
+            transform: translate(-50%, 0);
+            opacity: 1;
+            visibility: visible;
         }
-        
-        /* ==========================================================================
-           10. Responsive Design
-           ========================================================================== */
-        @media (max-width: 1024px) {
-            .dual-focus-section { grid-template-columns: 1fr; }
+        .global-notification p {
+            margin: 0;
+            padding: 0;
         }
 
+        .application-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity var(--transition-medium), visibility var(--transition-medium); }
+        .application-modal.is-open { opacity: 1; visibility: visible; }
+        .modal-overlay { position: absolute; width: 100%; height: 100%; background-color: rgba(19, 48, 32, 0.7); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); cursor: pointer; }
+        .modal-content { position: relative; background-color: var(--color-paper); padding: 2.5rem 3rem; border-radius: var(--border-radius); box-shadow: 0 10px 30px rgba(0,0,0,0.2); max-width: 700px; width: 90%; max-height: 90vh; overflow-y: auto; transform: scale(0.95); transition: transform var(--transition-medium); }
+        .application-modal.is-open .modal-content { transform: scale(1); }
+        .modal-close { position: absolute; top: 1rem; right: 1rem; background: transparent; border: none; font-size: 2rem; line-height: 1; color: var(--color-dark-serpent); opacity: 0.6; cursor: pointer; transition: opacity var(--transition-fast); }
+        .modal-close:hover { opacity: 1; }
+        
+        #application-form { display: flex; flex-direction: column; gap: 1.25rem; }
+        .modal-form-header { display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin-bottom: 1.5rem; }
+        .modal-form-header span { font-family: var(--font-primary); font-size: 2rem; font-weight: var(--font-weight-semibold); color: var(--color-dark-serpent); line-height: 1; }
+        .modal-header-logo { height: 70px; width: auto; }
+        .form-group { display: flex; flex-direction: column; gap: 0.25rem; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        #application-form label, #admin-login-form label { font-weight: var(--font-weight-medium); font-size: 0.9rem; color: var(--color-castleton-green); }
+        #application-form input, #admin-login-form input, #application-form select, #application-form textarea { width: 100%; padding: 0.75rem 1rem; border: 1px solid rgba(19, 48, 32, 0.2); border-radius: var(--border-radius); background-color: var(--color-sea-salt); font-family: var(--font-primary); font-size: 1rem; color: var(--color-dark-serpent); transition: border-color var(--transition-fast), box-shadow var(--transition-fast); }
+        #application-form input:focus, #admin-login-form input:focus, #application-form select:focus, #application-form textarea:focus { outline: none; border-color: var(--color-saffaron); box-shadow: 0 0 0 3px rgba(255, 179, 71, 0.4); }
+        #application-form textarea { resize: vertical; min-height: 100px; }
+        #application-form .cta-button, #admin-login-form .cta-button { width: 100%; margin-top: 1rem; }
+        
+        .form-message {
+            text-align: center;
+            padding: 10px;
+            border-radius: var(--border-radius);
+            margin-top: 1rem;
+            font-weight: 500;
+            display: none;
+        }
+        .form-message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            display: block;
+        }
+
+        .admin-login-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity var(--transition-medium), visibility var(--transition-medium); }
+        .admin-login-modal.is-open { opacity: 1; visibility: visible; }
+        .admin-login-modal .modal-content { max-width: 450px; }
+        .admin-login-modal.is-open .modal-content { transform: scale(1); }
+        #admin-login-form { display: flex; flex-direction: column; gap: 1.25rem; text-align: left; }
+        #admin-login-form h2 { text-align: center; margin-bottom: 1.5rem; font-size: 2rem; }
+        .login-error-message { color: #d93025; font-size: 0.9rem; text-align: center; margin-top: -0.5rem; min-height: 1.2em; }
+        
+        @media (max-width: 1024px) { .dual-focus-section { grid-template-columns: 1fr; } }
         @media (max-width: 768px) {
             html { font-size: 15px; }
-
             .mobile-nav-toggle { display: flex; }
-            .main-nav {
-                position: fixed; top: 0; right: -100%;
-                width: 80%; max-width: 320px; height: 100vh;
-                background-color: var(--color-paper);
-                padding-top: var(--header-height);
-                transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-                z-index: 999; box-shadow: -5px 0 15px rgba(0,0,0,0.1);
-                display: flex; 
-            }
+            .main-nav { position: fixed; top: 0; right: -100%; width: 80%; max-width: 320px; height: 100vh; background-color: var(--color-paper); padding-top: var(--header-height); transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); z-index: 999; box-shadow: -5px 0 15px rgba(0,0,0,0.1); display: flex; }
             .main-nav.is-open { right: 0; }
-            .main-nav ul {
-                flex-direction: column; justify-content: flex-start;
-                align-items: center; padding-top: 3rem; width: 100%;
-            }
-            .main-nav li {
-                width: 100%; text-align: center;
-                border-bottom: 1px solid rgba(19, 48, 32, 0.1);
-            }
-            .main-nav li:first-child {
-                border-top: 1px solid rgba(19, 48, 32, 0.1);
-            }
+            .main-nav ul { flex-direction: column; justify-content: flex-start; align-items: center; padding-top: 3rem; width: 100%; }
+            .main-nav li { width: 100%; text-align: center; border-bottom: 1px solid rgba(19, 48, 32, 0.1); }
+            .main-nav li:first-child { border-top: 1px solid rgba(19, 48, 32, 0.1); }
             .main-nav a { padding: 1.5rem 1rem; font-size: 1.2rem; width: 100%; }
             .main-nav a::after { display: none; }
-
-            .main-nav a.active {
-                background-color: transparent; /* Explicitly set to transparent */
-            }
-
-            .footer-container { 
-                flex-direction: column; text-align: center; align-items: center; 
-            }
-            .footer-column { 
-                min-width: 100%; margin-bottom: 2rem; padding: 0; 
-            }
+            .main-nav .nav-cta-item a { background: transparent; color: var(--color-dark-serpent); padding: 1.5rem 1rem; border-radius: 0; }
+            .main-nav .nav-cta-item a:hover { background: rgba(19, 48, 32, 0.05); transform: none; }
+            .main-nav a.active { background-color: transparent; }
+            .footer-container { flex-direction: column; text-align: center; align-items: center; }
+            .footer-column { min-width: 100%; margin-bottom: 2rem; padding: 0; }
             .footer-main { order: 1; }
             .footer-links { order: 2; }
             .footer-connect { order: 3; }
             .footer-social { justify-content: center; }
+            .modal-content { padding: 2rem 1.5rem; }
+            .form-row { grid-template-columns: 1fr; }
+            .modal-form-header span { font-size: 1.5rem; }
+            .modal-header-logo { height: 35px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- NEW: Global Notification Element -->
+    <div id="global-notification" class="global-notification" aria-live="assertive">
+        <p id="notification-message"></p>
+    </div>
+
+    <!-- The rest of your body content (header, main, etc.) remains here -->
     <header class="site-header">
-        <a href="index.html" class="logo-link">
+        <a href="#" class="logo-link" id="logo-login-trigger">
             <img src="logo.png" alt="Lifewood Logo">
         </a>
-        
         <nav class="main-nav">
             <ul>
                 <li><a href="index.html">Home</a></li>
@@ -281,16 +300,15 @@
                 <li><a href="services.html">Service</a></li>
                 <li><a href="projects.html">Projects</a></li>
                 <li><a href="contact.html">Contact</a></li>
+                <li class="nav-cta-item"><a href="#apply-form" id="apply-now-btn">Apply Now</a></li>
             </ul>
         </nav>
-
         <button class="mobile-nav-toggle" aria-label="Open navigation menu">
             <span class="dot"></span>
             <span class="dot"></span>
             <span class="dot"></span>
         </button>
     </header>
-
     <main>
         <section class="hero-section" id="home">
             <video playsinline autoplay muted loop class="hero-video"><source src="video.mp4" type="video/mp4"></video>
@@ -331,19 +349,13 @@
             </div>
         </section>
     </main>
-
     <footer class="site-footer-new" id="contact-footer">
         <div class="footer-container">
-            <!-- Column 1: Main Info -->
             <div class="footer-column footer-main">
-                <a href="index.html" class="footer-logo">
-                    <img src="logo.png" alt="Lifewood Logo">
-                </a>
+                <a href="index.html" class="footer-logo"><img src="logo.png" alt="Lifewood Logo"></a>
                 <p>Architects of transformative technology, bridging cultures and industries.</p>
                 <a href="contact.html" class="footer-contact-btn">Contact us</a>
             </div>
-
-            <!-- Column 2: Quick Links -->
             <div class="footer-column footer-links">
                 <h4>Quick Links</h4>
                 <ul>
@@ -353,70 +365,280 @@
                     <li><a href="projects.html">Projects</a></li>
                 </ul>
             </div>
-
-            <!-- Column 3: Social & Brand -->
            <div class="footer-column footer-connect">
                 <h4>Connect With Us</h4>
                 <div class="footer-social">
-                    <!-- ADDED: Facebook Icon -->
                     <a href="https://www.facebook.com/LifewoodPH" target="_blank" class="social-icon-link" aria-label="Lifewood on Facebook">
-                        <svg class="social-icon-fb" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="40" height="40" rx="8" fill="#1877F2"/>
-                            <path d="M24.43 32.22V20.84h3.86l.58-4.48h-4.44v-2.86c0-1.3.36-2.18 2.22-2.18h2.37v-4c-.41-.05-1.82-.18-3.46-.18-3.42 0-5.76 2.09-5.76 5.92v3.3H16v4.48h3.86v11.38h4.57z" fill="#FFFFFF"/>
-                        </svg>
+                        <svg class="social-icon-fb" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="#1877F2"/><path d="M24.43 32.22V20.84h3.86l.58-4.48h-4.44v-2.86c0-1.3.36-2.18 2.22-2.18h2.37v-4c-.41-.05-1.82-.18-3.46-.18-3.42 0-5.76 2.09-5.76 5.92v3.3H16v4.48h3.86v11.38h4.57z" fill="#FFFFFF"/></svg>
                     </a>
-                    <!-- END ADDED -->
                     <a href="https://www.youtube.com/@LifewoodDataTechnology/videos" target="_blank" class="social-icon-link" aria-label="Lifewood on YouTube">
-                        <svg class="social-icon-yt" viewBox="0 0 56 40" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="1" y="1" width="54" height="38" rx="8" fill="#FF0000"/>
-                            <path d="M37.25 19.9998L24.5 27.7998V12.1998L37.25 19.9998Z" fill="#FFFFFF"/>
-                        </svg>
+                        <svg class="social-icon-yt" viewBox="0 0 56 40" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="54" height="38" rx="8" fill="#FF0000"/><path d="M37.25 19.9998L24.5 27.7998V12.1998L37.25 19.9998Z" fill="#FFFFFF"/></svg>
                     </a>
-                   
                 </div>
                 <div class="be-amazed-logo">BE AMAZED<i class="logo-icon-footer"></i></div>
             </div>
         </div>
     </footer>
+    
+    <!-- APPLICATION MODAL -->
+    <div class="application-modal" id="application-modal" role="dialog" aria-labelledby="modal-title">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close form">×</button>
+            <form id="application-form">
+                <div class="modal-form-header">
+                    <span id="modal-title">Apply to Join</span>
+                    <img src="logo.png" alt="Lifewood Logo" class="modal-header-logo">
+                </div>
+                <!-- All form fields -->
+                <div class="form-row">
+                    <div class="form-group"><label for="firstName">First Name</label><input type="text" id="firstName" name="firstName" required></div>
+                    <div class="form-group"><label for="lastName">Last Name</label><input type="text" id="lastName" name="lastName" required></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label for="email">Email</label><input type="email" id="email" name="email" required></div>
+                    <div class="form-group"><label for="age">Age</label><input type="number" id="age" name="age" min="18" required></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label for="degree">Degree</label><input type="text" id="degree" name="degree" required></div>
+                    <div class="form-group">
+                        <label for="project">Project Applied for</label>
+                        <select id="project" name="project" required>
+                            <option value="" disabled selected>Select a project...</option>
+                            <option value="Data Extraction">Data Extraction</option>
+                            <option value="Machine Learning Enablement">Machine Learning Enablement</option>
+                            <option value="Genealogy">Genealogy</option>
+                            <option value="Natural Language Processing">Natural Language Processing</option>
+                            <option value="AI-Enabled Customer Service">AI-Enabled Customer Services</option>
+                            <option value="Computer Vision">Computer Vision</option>
+                            <option value="Autonomous Driving Technology">Autonomous Driving Technology</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="experience">Relevant Job Experience</label>
+                    <textarea id="experience" name="experience" rows="4" placeholder="Briefly describe your relevant skills and past work..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="resume">Resume Link (Google Drive, LinkedIn, etc.)</label>
+                    <input type="url" id="resume" name="resume" placeholder="https://..." required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="startTime">Start of Available Time</label>
+                        <input type="time" id="startTime" name="startTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="endTime">End of Available Time</label>
+                        <input type="time" id="endTime" name="endTime" required>
+                    </div>
+                </div>
+                <button type="submit" class="cta-button" id="submit-application-btn">Submit Application</button>
+                <!-- Message for form errors only -->
+                <p class="form-message" id="application-form-message"></p>
+            </form>
+        </div>
+    </div>
+    
+    <!-- ADMIN LOGIN MODAL -->
+    <div class="admin-login-modal" id="admin-login-modal" role="dialog" aria-labelledby="admin-modal-title">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close form">×</button>
+            <form id="admin-login-form" novalidate>
+                <h2 id="admin-modal-title">Admin Login</h2>
+                <div class="form-group">
+                    <label for="admin-email">Email</label>
+                    <input type="email" id="admin-email" name="admin-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="admin-password">Password</label>
+                    <input type="password" id="admin-password" name="admin-password" required>
+                </div>
+                <p class="login-error-message" id="login-error-message"></p>
+                <button type="submit" class="cta-button">Log In</button>
+            </form>
+        </div>
+    </div>
 
-    <script>
+  <script type="module">
+    // 1. IMPORT FIREBASE FUNCTIONS
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+
+    // 2. YOUR REAL FIREBASE CONFIGURATION
+    const firebaseConfig = {
+        apiKey: "AIzaSyDarCRtbAAnxXC0BXiPF91dFtPlGLvroc4",
+        authDomain: "rjlifewood.firebaseapp.com",
+        projectId: "rjlifewood",
+        storageBucket: "rjlifewood.appspot.com",
+        messagingSenderId: "869843100414",
+        appId: "1:869843100414:web:6c7791dfb54f32fe997baf",
+        measurementId: "G-P3HYVLCS0K"
+    };
+
+    // 3. INITIALIZE FIREBASE
+    let app, db, auth;
+    try {
+        app = initializeApp(firebaseConfig);
+        db = getFirestore(app);
+        auth = getAuth(app);
+        console.log("Firebase initialized successfully!");
+    } catch (e) {
+        console.error("CRITICAL: Firebase initialization failed.", e);
+    }
+    
+    if (app) {
         document.addEventListener("DOMContentLoaded", function() {
-            // Fade in the body to prevent a flash of unstyled content
-            document.body.classList.add('is-loaded');
+            const body = document.body;
+            body.classList.add('is-loaded');
 
-            // --- MOBILE NAVIGATION SCRIPT ---
+            // --- UPDATED NOTIFICATION LOGIC ---
+            const notificationElement = document.getElementById('global-notification');
+            const notificationMessage = document.getElementById('notification-message');
+            let notificationTimer;
+
+            function showGlobalNotification(message) {
+                clearTimeout(notificationTimer); // Clear any existing timer
+                notificationMessage.textContent = message;
+                notificationElement.classList.add('is-visible');
+
+                // Automatically hide after 5 seconds
+                notificationTimer = setTimeout(() => {
+                    notificationElement.classList.remove('is-visible');
+                }, 5000);
+            }
+
+            // --- MODAL & NAV LOGIC (Unchanged) ---
             const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
             const mainNav = document.querySelector('.main-nav');
-            const body = document.body;
-
-            mobileNavToggle.addEventListener('click', function() {
-                mainNav.classList.toggle('is-open');
-                body.classList.toggle('no-scroll');
-            });
-
-            // --- ACTIVE NAVIGATION LINK HIGHLIGHTER ---
+            if(mobileNavToggle) {
+              mobileNavToggle.addEventListener('click', function() {
+                  mainNav.classList.toggle('is-open');
+                  body.classList.toggle('no-scroll');
+              });
+            }
             const navLinks = document.querySelectorAll('.main-nav a');
             const currentURL = window.location.href; 
             let activeLinkFound = false;
-
             navLinks.forEach(link => {
-                // The browser resolves `link.href` to a full URL, making comparison reliable
                 if (link.href === currentURL) {
                     link.classList.add('active');
                     activeLinkFound = true;
                 }
             });
-
-            // Fallback for the homepage if the URL is just the root (e.g., ".../WEBSITE/")
             if (!activeLinkFound && (currentURL.endsWith('/') || !currentURL.split('/').pop().includes('.'))) {
-                 const homeLink = document.querySelector('.main-nav a[href="index.html"]');
-                 if (homeLink) {
-                    homeLink.classList.add('active');
-                 }
+                    const homeLink = document.querySelector('.main-nav a[href="index.html"]');
+                    if (homeLink) homeLink.classList.add('active');
+            }
+            const applyButton = document.getElementById('apply-now-btn');
+            const modal = document.getElementById('application-modal');
+            const closeModalButton = modal.querySelector('.modal-close');
+            const modalOverlay = modal.querySelector('.modal-overlay');
+            
+            function openModal() {
+                modal.classList.add('is-open');
+                body.classList.add('no-scroll');
+            }
+            function closeModal() {
+                modal.classList.remove('is-open');
+                body.classList.remove('no-scroll');
+            }
+            if(applyButton) applyButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                openModal();
+            });
+            if(closeModalButton) closeModalButton.addEventListener('click', closeModal);
+            if(modalOverlay) modalOverlay.addEventListener('click', closeModal);
+
+            // --- UPDATED APPLICATION FORM LOGIC ---
+            const applicationForm = document.getElementById('application-form');
+            const formErrorMessage = document.getElementById('application-form-message'); // This is now for errors only
+            const submitBtn = document.getElementById('submit-application-btn');
+
+            if (applicationForm) {
+                applicationForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Submitting...';
+                    formErrorMessage.style.display = 'none'; // Hide old error messages
+
+                    const formData = new FormData(applicationForm);
+                    const newApplication = {
+                        firstName: formData.get('firstName'),
+                        lastName: formData.get('lastName'),
+                        email: formData.get('email'),
+                        age: formData.get('age'),
+                        degree: formData.get('degree'),
+                        project: formData.get('project'),
+                        experience: formData.get('experience'),
+                        resume: formData.get('resume'),
+                        startTime: formData.get('startTime'),
+                        endTime: formData.get('endTime'),
+                        submissionDate: new Date().toISOString()
+                    };
+
+                    try {
+                        await addDoc(collection(db, "applications"), newApplication);
+                        
+                        // ON SUCCESS: Reset form, close modal, and show the global notification
+                        applicationForm.reset();
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Submit Application';
+                        closeModal();
+                        showGlobalNotification('Thank you! Your application was submitted successfully.');
+
+                    } catch (error) {
+                        console.error("Error submitting application: ", error);
+                        // ON ERROR: Show the error message inside the modal
+                        formErrorMessage.textContent = 'An error occurred. Please try again.';
+                        formErrorMessage.style.display = 'block';
+                        
+                        // Re-enable the button so the user can try again
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Submit Application';
+                    }
+                });
+            }
+            
+            // --- ADMIN LOGIN LOGIC (Unchanged) ---
+            const logoLoginTrigger = document.getElementById('logo-login-trigger');
+            const adminModal = document.getElementById('admin-login-modal');
+            if (adminModal) {
+              const closeAdminModalButton = adminModal.querySelector('.modal-close');
+              const adminModalOverlay = adminModal.querySelector('.modal-overlay');
+              const adminLoginForm = document.getElementById('admin-login-form');
+              const loginErrorMessage = document.getElementById('login-error-message');
+              function openAdminModal() { adminModal.classList.add('is-open'); body.classList.add('no-scroll'); }
+              function closeAdminModal() {
+                  adminModal.classList.remove('is-open');
+                  body.classList.remove('no-scroll');
+                  if(loginErrorMessage) loginErrorMessage.textContent = '';
+                  if(adminLoginForm) adminLoginForm.reset();
+              }
+              if(logoLoginTrigger) logoLoginTrigger.addEventListener('click', function(e) { e.preventDefault(); openAdminModal(); });
+              if(closeAdminModalButton) closeAdminModalButton.addEventListener('click', closeAdminModal);
+              if(adminModalOverlay) adminModalOverlay.addEventListener('click', closeAdminModal);
+              if(adminLoginForm) {
+                  adminLoginForm.addEventListener('submit', async function(e) {
+                      e.preventDefault();
+                      if(loginErrorMessage) loginErrorMessage.textContent = '';
+                      const emailInput = document.getElementById('admin-email');
+                      const passwordInput = document.getElementById('admin-password');
+                      try {
+                          await signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
+                          window.location.href = 'dashboard.html';
+                      } catch (error) {
+                          console.error("Admin login failed:", error.code);
+                          if(loginErrorMessage) loginErrorMessage.textContent = 'Invalid email or password.';
+                      }
+                  });
+              }
             }
 
 
-            // Scroll animation script
+            // --- Other visual scripts (scroll, sparkle) are unchanged ---
             const animatedElements = document.querySelectorAll('.fade-in-section, [data-stagger], .focus-column');
             const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
             const observer = new IntersectionObserver((entries, observer) => {
@@ -425,19 +647,16 @@
                         entry.target.classList.add('is-visible');
                         if (entry.target.hasAttribute('data-stagger')) {
                             const children = entry.target.querySelectorAll(':scope > *');
-                            children.forEach((child, index) => {
-                                child.style.setProperty('--stagger-delay', `${index * 150}ms`);
-                            });
+                            children.forEach((child, index) => { child.style.setProperty('--stagger-delay', `${index * 150}ms`); });
                         }
                         observer.unobserve(entry.target);
                     }
                 });
             }, observerOptions);
             animatedElements.forEach(el => observer.observe(el));
-
-            // Cursor sparkle effect
             const sparkleColors = ['#f5eedb', '#FFB347', '#046241', '#FFC370', '#133020'];
             document.body.addEventListener('mousedown', function(e) {
+                if(e.target.closest('.application-modal, .admin-login-modal')) return;
                 const sparkle = document.createElement('div');
                 sparkle.classList.add('click-sparkle');
                 sparkle.style.left = `${e.clientX}px`;
@@ -448,6 +667,8 @@
                 setTimeout(() => sparkle.remove(), 500);
             });
         });
-    </script>
+    }
+</script>
+
 </body>
 </html>
