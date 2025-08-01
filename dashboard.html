@@ -6,8 +6,9 @@
   <title>Admin Dashboard - Lifewood</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
+    /* --- VIBRANT EARTH STYLE (FINAL) --- */
     :root {
       --color-paper: #f5eedb;
       --color-white: #ffffff;
@@ -19,455 +20,303 @@
       --color-accept-green: #28a745;
       --color-reject-red: #dc3545;
       --font-primary: 'Manrope', sans-serif;
-      --border-radius: 8px;
+      --border-radius: 12px;
+      --shadow-strong: 0 8px 30px rgba(0, 0, 0, 0.1);
     }
 
     /* --- Base & Layout --- */
-    body {
-      background-color: var(--color-paper);
-      color: var(--color-dark-serpent);
-      font-family: var(--font-primary);
-      font-weight: 500;
-      margin: 0;
-      padding: 2rem;
-      line-height: 1.6;
-    }
+    body { background-color: var(--color-paper); color: var(--color-dark-serpent); font-family: var(--font-primary); margin: 0; }
+    #loading-state { text-align: center; padding: 5rem; font-style: italic; color: #5c6c64; font-size: 1.2rem; }
+    .dashboard-layout { display: none; flex-direction: row; min-height: 100vh; }
 
-    .dashboard-container {
-      max-width: 1400px;
-      margin: 0 auto;
-      background-color: var(--color-white);
-      padding: 2rem 3rem;
-      border-radius: var(--border-radius);
-      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
-      display: none; /* Hidden until authenticated */
+    /* --- Sidebar Navigation --- */
+    .sidebar {
+      width: 240px; background-color: var(--color-dark-serpent); color: var(--color-sea-salt);
+      padding: 2rem 1rem; display: flex; flex-direction: column; flex-shrink: 0;
     }
-
-    .dashboard-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid rgba(19, 48, 32, 0.1);
-      padding-bottom: 1.5rem;
-      margin-bottom: 1rem;
-    }
-
-    h1 {
-      font-weight: 600;
-      font-size: 2.5rem;
-      margin: 0;
-    }
-
-    #loading-state {
-      text-align: center;
-      padding: 3rem;
-      font-style: italic;
-      color: #5c6c64;
-      font-size: 1.2rem;
-    }
-
-    /* --- Navigation Tabs --- */
-    .dashboard-nav {
-      display: flex;
-      gap: 2rem;
-      border-bottom: 1px solid rgba(19, 48, 32, 0.1);
-      margin-bottom: 2rem;
-    }
-
-    .nav-tab {
-      font-family: var(--font-primary);
-      font-weight: 600;
-      font-size: 1.75rem;
-      color: var(--color-castleton-green);
-      padding-bottom: 1rem;
-      cursor: pointer;
-      border-bottom: 3px solid transparent;
-      transition: color 0.3s ease, border-color 0.3s ease;
-      position: relative;
-      top: 1px;
-    }
-
-    .nav-tab:hover {
-      color: var(--color-saffaron);
-    }
-
-    .nav-tab.active {
-      color: var(--color-castleton-green);
-      border-bottom-color: var(--color-saffaron);
-    }
-
-    .dashboard-section {
-      display: none;
-    }
-
-    .dashboard-section.active {
-      display: block;
-    }
-
-    /* --- Tables --- */
-    .table-wrapper {
-      overflow-x: auto;
-    }
-
-    .data-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1rem;
-      white-space: nowrap;
-    }
-
-    .data-table th,
-    .data-table td {
-      padding: 12px 15px;
-      text-align: left;
-      border-bottom: 1px solid rgba(19, 48, 32, 0.1);
-    }
-
-    .data-table th {
-      background-color: var(--color-sea-salt);
-      font-weight: 600;
-      color: var(--color-castleton-green);
-    }
-
-    .data-table tbody tr:hover {
-      background-color: var(--color-sea-salt);
-    }
-
-    /* --- Buttons & Links --- */
-    .logout-btn {
-      background: var(--color-dark-serpent);
-      color: var(--color-paper);
-      padding: 0.6rem 1.5rem;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: 500;
-      border: none;
-      cursor: pointer;
-      transition: opacity 0.2s ease;
-    }
-
-    .logout-btn:hover {
-      opacity: 0.85;
-    }
-
-    .action-btn {
-      padding: 0.4rem 0.8rem;
-      border: none;
-      border-radius: 4px;
-      color: white;
-      cursor: pointer;
-      font-weight: 500;
-      margin-right: 5px;
-      transition: transform 0.2s ease;
-    }
-
-    .action-btn:hover {
-      transform: scale(1.05);
-    }
-
-    .action-btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    .accept-btn {
-      background-color: var(--color-accept-green);
-    }
-
-    .reject-btn,
-    .resign-btn {
-      background-color: var(--color-reject-red);
-    }
+    .sidebar-header { font-size: 1.5rem; font-weight: 800; padding: 0 1rem 2rem 1rem; text-align: center; color: var(--color-white); }
+    .sidebar-nav { list-style: none; padding: 0; margin: 0; }
     
-    a {
-      color: var(--color-castleton-green);
-      font-weight: 500;
+    .nav-link {
+      display: flex; align-items: center; gap: 12px; color: var(--color-sea-salt);
+      text-decoration: none; font-weight: 600; padding: 0.8rem 1rem;
+      border-radius: 8px; margin-bottom: 0.5rem; cursor: pointer; transition: all 0.3s ease;
     }
+    .nav-icon { flex-shrink: 0; stroke-width: 2.5; }
+    .nav-link:hover { background-color: rgba(255, 255, 255, 0.1); }
+    .nav-link.active { background-color: var(--color-saffaron); color: var(--color-dark-serpent); font-weight: 700; }
 
-    a:hover {
-      text-decoration: underline;
+    .logout-link:hover {
+        background-color: rgba(220, 53, 69, 0.2);
+        color: var(--color-reject-red);
     }
+    .logout-link:hover .nav-icon { stroke: var(--color-reject-red); }
+
+    /* --- Main Content Area --- */
+    .main-content { flex: 1; padding: 2rem 3rem; overflow-y: auto; }
+    .main-header { display: flex; align-items: center; margin-bottom: 2rem; }
+    .main-header h1 { font-size: 2.75rem; font-weight: 800; margin: 0; }
+    
+    .dashboard-section { display: none; }
+    .dashboard-section.active { display: block; }
+
+    .summary-cards-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
+    .summary-card { padding: 1.5rem 2rem; border-radius: var(--border-radius); box-shadow: var(--shadow-strong); color: var(--color-white); }
+    .summary-card h3 { margin: 0 0 0.5rem 0; font-weight: 600; font-size: 1rem; opacity: 0.9; }
+    .summary-card .count { font-size: 3rem; font-weight: 800; line-height: 1.1; }
+    .card-green { background-color: var(--color-castleton-green); }
+    .card-saffron { background-color: var(--color-saffaron); color: var(--color-dark-serpent); }
+    .card-dark { background-color: var(--color-dark-serpent); }
+
+    .content-card { background-color: var(--color-white); border-radius: var(--border-radius); box-shadow: var(--shadow-strong); overflow: hidden; }
+    .content-card-header { padding: 1.5rem 2rem; border-bottom: 1px solid #eef2f0; }
+    .content-card-header h2 { font-size: 1.5rem; font-weight: 700; margin: 0; }
+    .table-wrapper { overflow-x: auto; }
+    .data-table { width: 100%; border-collapse: collapse; }
+    
+    .data-table th, .data-table td {
+        padding: 12px 15px;
+        text-align: center;
+        border-bottom: 1px solid #eef2f0;
+        vertical-align: middle;
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table thead { background-color: var(--color-castleton-green); }
+    .data-table th { color: var(--color-white); font-size: 0.9rem; font-weight: 600; text-transform: uppercase; }
+    .data-table tbody tr:hover { background-color: var(--color-sea-salt); }
+
+    /* --- Action Buttons & Badge --- */
+    .action-buttons-column { display: flex; flex-direction: row; gap: 8px; justify-content: center; }
+    .status-badge {
+      padding: 0.25rem 0.6rem; border-radius: 50px; font-size: 0.8rem; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 5px; background-color: #e3f4e8; color: #1e7d3d;
+    }
+    .status-badge::before { content: ''; display: block; width: 7px; height: 7px; border-radius: 50%; background-color: var(--color-accept-green); }
+    .action-btn {
+      width: 36px; height: 36px; padding: 0; border: none; border-radius: 8px; color: white;
+      cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center;
+    }
+    .action-btn:hover { transform: scale(1.1); filter: brightness(1.1); }
+    .action-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .action-btn svg { width: 20px; height: 20px; }
+    .accept-btn { background-color: var(--color-accept-green); }
+    .reject-btn, .resign-btn { background-color: var(--color-reject-red); }
+    a { color: var(--color-castleton-green); font-weight: 600; text-decoration: none; }
+    a:hover { text-decoration: underline; color: var(--color-saffaron); }
+
+    #toast-container { position: fixed; top: 20px; right: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 10px; }
+    .toast { padding: 12px 20px; border-radius: 8px; color: white; font-weight: 600; box-shadow: 0 5px 15px rgba(0,0,0,0.2); opacity: 0; animation: toast-fade-in 0.5s forwards; }
+    .toast.success { background-color: var(--color-accept-green); }
+    .toast.error { background-color: var(--color-reject-red); }
+    @keyframes toast-fade-in { from { opacity: 0; transform: translateX(100%); } to { opacity: 1; transform: translateX(0); } }
   </style>
 </head>
 <body>
 
   <div id="loading-state">Verifying your access...</div>
 
-  <div class="dashboard-container" id="dashboard-container">
-    <div class="dashboard-header">
-      <h1>Admin Dashboard</h1>
-      <button id="logout-btn" class="logout-btn">Log Out</button>
-    </div>
+  <div class="dashboard-layout" id="dashboard-layout">
+    
+    <aside class="sidebar">
+      <div class="sidebar-header">Lifewood HR</div>
+      <ul class="sidebar-nav" id="sidebar-nav">
+        <li>
+          <a class="nav-link active" data-target="#applications-section">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+            <span>Applications</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" data-target="#employees-section">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            <span>Employees</span>
+          </a>
+        </li>
+        <li>
+            <a id="logout-link" class="nav-link logout-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                <span>Log Out</span>
+            </a>
+        </li>
+      </ul>
+    </aside>
 
-    <nav class="dashboard-nav" id="dashboard-nav">
-      <div class="nav-tab active" data-target="#applications-section">Received Applications</div>
-      <div class="nav-tab" data-target="#employees-section">List of Employees</div>
-    </nav>
+    <main class="main-content">
+      <header class="main-header">
+        <h1>Admin Dashboard</h1>
+      </header>
+      
+      <section class="dashboard-section summary-cards-container">
+        <div class="summary-card card-green"><h3>Pending Applications</h3><p class="count" id="total-applicants-card">0</p></div>
+        <div class="summary-card card-dark"><h3>Total Employees</h3><p class="count" id="total-employees-card">0</p></div>
+        <div class="summary-card card-saffron"><h3>Welcome, Admin</h3><p class="count" style="font-size: 1.5rem; line-height: 1.2;">Manage your team from here.</p></div>
+      </section>
 
-    <section class="dashboard-section active" id="applications-section">
-      <div class="table-wrapper">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Project Applied For</th>
-              <th>Available Time</th>
-              <th>Resume</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="applications-tbody">
-            <!-- Application rows will be inserted here by JavaScript -->
-          </tbody>
-        </table>
-      </div>
-    </section>
+      <section class="dashboard-section active" id="applications-section">
+        <div class="content-card">
+          <div class="content-card-header"><h2>New Applicants</h2></div>
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Project</th><th>Time</th><th>Resume</th><th>Action</th></tr></thead>
+              <tbody id="applications-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
 
-    <section class="dashboard-section" id="employees-section">
-      <div class="table-wrapper">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Project</th>
-              <th>Available Time</th>
-              <th>Hired On</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="employees-tbody">
-            <!-- Employee rows will be inserted here by JavaScript -->
-          </tbody>
-        </table>
-      </div>
-    </section>
+      <section class="dashboard-section" id="employees-section">
+        <div class="content-card">
+          <div class="content-card-header"><h2>Current Employees</h2></div>
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Project</th><th>Status</th><th>Time</th><th>Hired On</th><th>Action</th></tr></thead>
+              <tbody id="employees-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
   </div>
 
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <div id="toast-container"></div>
 
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script type="module">
-    // --- 1. FIREBASE & EMAILJS IMPORTS/INITIALIZATION ---
+    // --- 1. FIREBASE & EMAILJS ---
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
     import { getFirestore, collection, getDocs, query, orderBy, doc, getDoc, deleteDoc, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
-
-    // Configuration Keys
-    const EMAILJS_PUBLIC_KEY = "xBE5uDcE7fyoh49A6";
-    const EMAILJS_SERVICE_ID = "service_8qtucfr";
-    const EMAILJS_ACCEPTANCE_TEMPLATE_ID = "template_tmr0ynl";
-    const EMAILJS_REJECTION_TEMPLATE_ID = "template_13rncp4";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyDarCRtbAAnxXC0BXiPF91dFtPlGLvroc4",
-      authDomain: "rjlifewood.firebaseapp.com",
-      projectId: "rjlifewood",
-      storageBucket: "rjlifewood.appspot.com",
-      messagingSenderId: "869843100414",
-      appId: "1:869843100414:web:6c7791dfb54f32fe997baf",
-      measurementId: "G-P3HYVLCS0K"
-    };
-
-    // Initialize services
+    const EMAILJS_PUBLIC_KEY = "xBE5uDcE7fyoh49A6", EMAILJS_SERVICE_ID = "service_8qtucfr", EMAILJS_ACCEPTANCE_TEMPLATE_ID = "template_tmr0ynl", EMAILJS_REJECTION_TEMPLATE_ID = "template_13rncp4";
+    const firebaseConfig = { apiKey: "AIzaSyDarCRtbAAnxXC0BXiPF91dFtPlGLvroc4", authDomain: "rjlifewood.firebaseapp.com", projectId: "rjlifewood", storageBucket: "rjlifewood.appspot.com", messagingSenderId: "869843100414", appId: "1:869843100414:web:6c7791dfb54f32fe997baf", measurementId: "G-P3HYVLCS0K" };
     emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const auth = getAuth(app);
+    const app = initializeApp(firebaseConfig), db = getFirestore(app), auth = getAuth(app);
 
     // --- 2. DOM ELEMENT REFERENCES ---
-    const loadingState = document.getElementById('loading-state');
-    const dashboardContainer = document.getElementById('dashboard-container');
-    const applicationsTbody = document.getElementById('applications-tbody');
-    const employeesTbody = document.getElementById('employees-tbody');
-    const logoutButton = document.getElementById('logout-btn');
-    const dashboardNav = document.getElementById('dashboard-nav');
-    const navTabs = document.querySelectorAll('.nav-tab');
-    const contentSections = document.querySelectorAll('.dashboard-section');
+    const loadingState = document.getElementById('loading-state'), dashboardLayout = document.getElementById('dashboard-layout'), applicationsTbody = document.getElementById('applications-tbody'), employeesTbody = document.getElementById('employees-tbody'), logoutLink = document.getElementById('logout-link'), totalApplicantsCard = document.getElementById('total-applicants-card'), totalEmployeesCard = document.getElementById('total-employees-card'), toastContainer = document.getElementById('toast-container'), sidebarNav = document.getElementById('sidebar-nav'), sections = document.querySelectorAll('.dashboard-section');
 
-    // --- 3. AUTHENTICATION STATE MANAGEMENT ---
+    // --- 3. AUTHENTICATION ---
     onAuthStateChanged(auth, user => {
-      if (user) {
-        // User is signed in, show the dashboard
-        loadingState.style.display = 'none';
-        dashboardContainer.style.display = 'block';
-        populateApplicationsTable();
-        populateEmployeesTable();
-      } else {
-        // User is signed out, redirect to home
-        loadingState.textContent = 'Access Denied. Redirecting...';
-        setTimeout(() => { window.location.href = 'index.html'; }, 2500);
-      }
+      if (user) { loadingState.style.display = 'none'; dashboardLayout.style.display = 'flex'; populateApplicationsTable(); populateEmployeesTable(); } 
+      else { loadingState.textContent = 'Access Denied. Redirecting...'; setTimeout(() => { window.location.href = 'index.html'; }, 2500); }
     });
 
-    // --- 4. UI LOGIC (TABS & LOGOUT) ---
-    dashboardNav.addEventListener('click', (event) => {
-      const clickedTab = event.target.closest('.nav-tab');
-      if (!clickedTab) return;
-
-      const targetId = clickedTab.dataset.target;
-      const targetSection = document.querySelector(targetId);
-
-      navTabs.forEach(tab => tab.classList.remove('active'));
-      contentSections.forEach(section => section.classList.remove('active'));
-
-      clickedTab.classList.add('active');
-      targetSection.classList.add('active');
-    });
+    // --- 4. UI LOGIC (MODIFIED) ---
+    function showToast(message, type = 'success') { const toast = document.createElement('div'); toast.classList.add('toast', type); toast.textContent = message; toastContainer.appendChild(toast); setTimeout(() => { toast.remove(); }, 4000); }
     
-    logoutButton.addEventListener('click', async () => {
-      try {
-        await signOut(auth);
-      } catch (error) {
-        console.error('Logout failed:', error);
-        alert('Logout failed. Please check the console.');
+    // --- NEW: Helper function to format time ---
+    function formatTo12Hour(timeString) {
+      if (!timeString || !timeString.includes(':')) {
+        return timeString; // Return original if format is unexpected
       }
+      const [hours24, minutes] = timeString.split(':');
+      let hour = parseInt(hours24, 10);
+      const ampm = hour >= 12 ? 'PM' : 'AM';
+      
+      hour = hour % 12;
+      hour = hour ? hour : 12; // The hour '0' should be '12'
+      
+      return `${hour}:${minutes} ${ampm}`;
+    }
+
+    logoutLink.addEventListener('click', async () => { try { await signOut(auth); showToast('You have been logged out.'); } catch (error) { console.error('Logout failed:', error); showToast('Logout failed.', 'error'); } });
+    sidebarNav.addEventListener('click', (event) => {
+        const clickedLink = event.target.closest('.nav-link'); if (!clickedLink || clickedLink.id === 'logout-link') return;
+        const targetId = clickedLink.dataset.target; if (!targetId) return;
+        sidebarNav.querySelectorAll('.nav-link').forEach(link => { if (link.dataset.target) link.classList.remove('active') }); 
+        clickedLink.classList.add('active');
+        sections.forEach(section => { if (`#${section.id}` === targetId) { section.classList.add('active'); } else { section.classList.remove('active'); } });
     });
 
-    // --- 5. DATA FETCHING & TABLE POPULATION ---
+    // --- 5. DATA FETCHING & TABLE POPULATION (MODIFIED) ---
     async function populateApplicationsTable() {
-      applicationsTbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">Loading applications...</td></tr>';
+      applicationsTbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 2rem;">Loading...</td></tr>';
       try {
         const q = query(collection(db, "applications"), orderBy("submissionDate", "desc"));
         const querySnapshot = await getDocs(q);
-
-        if (querySnapshot.empty) {
-          applicationsTbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 2rem;">No new applications.</td></tr>';
-        } else {
+        totalApplicantsCard.textContent = querySnapshot.size;
+        if (querySnapshot.empty) { applicationsTbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 2rem;">No new applications.</td></tr>'; } 
+        else {
           applicationsTbody.innerHTML = '';
           let counter = 1;
           querySnapshot.forEach(doc => {
             const appData = doc.data();
             const row = applicationsTbody.insertRow();
-            row.innerHTML = `
-              <td>${counter++}</td>
-              <td>${appData.firstName} ${appData.lastName}</td>
-              <td><a href="mailto:${appData.email}">${appData.email}</a></td>
-              <td>${appData.project}</td>
-              <td>${appData.startTime} - ${appData.endTime}</td>
-              <td><a href="${appData.resume}" target="_blank" rel="noopener noreferrer">View Resume</a></td>
-              <td>
-                <button class="action-btn accept-btn" data-id="${doc.id}">Accept</button>
-                <button class="action-btn reject-btn" data-id="${doc.id}">Reject</button>
-              </td>
-            `;
+            // --- MODIFIED: Use the new time formatting function ---
+            const formattedTime = `${formatTo12Hour(appData.startTime)} - ${formatTo12Hour(appData.endTime)}`;
+            row.innerHTML = `<td>${counter++}</td><td>${appData.firstName} ${appData.lastName}</td><td><a href="mailto:${appData.email}">${appData.email}</a></td><td>${appData.project}</td><td>${formattedTime}</td><td><a href="${appData.resume}" target="_blank" rel="noopener noreferrer">View Resume</a></td><td class="action-column"><div class="action-buttons-column"><button class="action-btn accept-btn" data-id="${doc.id}" title="Accept"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></button><button class="action-btn reject-btn" data-id="${doc.id}" title="Reject"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div></td>`;
           });
         }
-      } catch (error) {
-        console.error("Error fetching applications:", error);
-        applicationsTbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: red;">Error loading applications.</td></tr>';
-      }
+      } catch (error) { console.error("Error fetching applications:", error); showToast('Error loading applications.', 'error'); }
     }
-
     async function populateEmployeesTable() {
-      employeesTbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">Loading employees...</td></tr>';
+      employeesTbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 2rem;">Loading...</td></tr>';
       try {
         const q = query(collection(db, "employees"), orderBy("hiredOn", "desc"));
         const querySnapshot = await getDocs(q);
-        if (querySnapshot.empty) {
-          employeesTbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 2rem;">No employees have been hired yet.</td></tr>';
-        } else {
+        totalEmployeesCard.textContent = querySnapshot.size;
+        if (querySnapshot.empty) { employeesTbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 2rem;">No employees hired yet.</td></tr>'; } 
+        else {
           employeesTbody.innerHTML = '';
           let counter = 1;
           querySnapshot.forEach(doc => {
             const empData = doc.data();
             const row = employeesTbody.insertRow();
             const hiredDate = empData.hiredOn.toDate().toLocaleDateString();
-            row.innerHTML = `
-              <td>${counter++}</td>
-              <td>${empData.firstName} ${empData.lastName}</td>
-              <td><a href="mailto:${empData.email}">${empData.email}</a></td>
-              <td>${empData.project}</td>
-              <td>${empData.startTime} - ${empData.endTime}</td>
-              <td>${hiredDate}</td>
-              <td><button class="action-btn resign-btn" data-id="${doc.id}">Resign</button></td>
-            `;
+            // --- MODIFIED: Use the new time formatting function ---
+            const formattedTime = `${formatTo12Hour(empData.startTime)} - ${formatTo12Hour(empData.endTime)}`;
+            row.innerHTML = `<td>${counter++}</td><td>${empData.firstName} ${empData.lastName}</td><td><a href="mailto:${empData.email}">${empData.email}</a></td><td>${empData.project}</td><td><span class="status-badge">Active</span></td><td>${formattedTime}</td><td>${hiredDate}</td><td class="action-column"><div class="action-buttons-column"><button class="action-btn resign-btn" data-id="${doc.id}" title="Resign Employee"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div></td>`;
           });
         }
-      } catch (error) {
-        console.error("Error fetching employees:", error);
-        employeesTbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: red;">Error loading employees.</td></tr>';
-      }
+      } catch (error) { console.error("Error fetching employees:", error); showToast('Error loading employees.', 'error'); }
     }
 
-    // --- 6. ACTION EVENT LISTENERS (ACCEPT/REJECT/RESIGN) ---
-    applicationsTbody.addEventListener('click', async (event) => {
-      const target = event.target;
-      const docId = target.dataset.id;
-
-      if (!docId || !target.classList.contains('action-btn')) return;
-
-      const originalText = target.textContent;
-      target.disabled = true;
-      target.textContent = 'Processing...';
-
-      try {
-        const appDocRef = doc(db, "applications", docId);
-        const appDocSnap = await getDoc(appDocRef);
-
-        if (!appDocSnap.exists()) {
-          alert("This application no longer exists. It may have been processed already.");
-          populateApplicationsTable();
-          return;
-        }
-
-        const appData = appDocSnap.data();
-        const templateParams = {
-          applicant_name: appData.firstName,
-          to_email: appData.email
-        };
-
-        // REJECT LOGIC
-        if (target.classList.contains('reject-btn')) {
-          if (confirm(`Are you sure you want to REJECT the application from ${appData.firstName}? This will send a rejection email and permanently delete their application.`)) {
-            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_REJECTION_TEMPLATE_ID, templateParams);
-            await deleteDoc(appDocRef);
-            alert(`Rejection email sent to ${appData.firstName} and their application has been removed.`);
-            populateApplicationsTable();
-          }
-        }
-
-        // ACCEPT LOGIC
-        if (target.classList.contains('accept-btn')) {
-          if (confirm(`Are you sure you want to ACCEPT ${appData.firstName}? This will add them to the employee list and send a welcome email.`)) {
-            await addDoc(collection(db, "employees"), { ...appData, hiredOn: serverTimestamp() });
-            await deleteDoc(appDocRef);
-            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_ACCEPTANCE_TEMPLATE_ID, templateParams);
-            alert(`Acceptance email sent to ${appData.firstName}! They have been added to the employee list.`);
-            populateApplicationsTable();
-            populateEmployeesTable();
-          }
-        }
-      } catch (error) {
-        console.error("Error processing application:", error);
-        alert("An error occurred while processing the application. Please check the console for details and try again.");
-      } finally {
-        // Always re-enable the button unless the row was deleted
-        if (!target.closest('tr')) return; // Row was removed, no button to re-enable
-        target.disabled = false;
-        target.textContent = originalText;
-      }
-    });
-
-    employeesTbody.addEventListener('click', async (event) => {
-      const target = event.target;
-      if (target.classList.contains('resign-btn')) {
+    // --- 6. ACTION EVENT LISTENERS ---
+    document.body.addEventListener('click', async (event) => {
+        const target = event.target.closest('.action-btn');
+        if (!target) return;
         const docId = target.dataset.id;
         if (!docId) return;
+        
+        target.disabled = true; 
+        const originalContent = target.innerHTML;
+        target.innerHTML = '...';
 
-        if (confirm('Are you sure you want to process this employee\'s resignation? This will permanently remove them from the list.')) {
-          try {
-            await deleteDoc(doc(db, "employees", docId));
-            alert('Employee has been removed.');
-            populateEmployeesTable();
-          } catch (error) {
-            console.error("Error processing resignation:", error);
-            alert('There was an error removing the employee. Please try again.');
-          }
+        try {
+            if (target.closest('#applications-tbody')) {
+                const appDocRef = doc(db, "applications", docId);
+                const appDocSnap = await getDoc(appDocRef);
+                if (!appDocSnap.exists()) { showToast("Application no longer exists.", 'error'); populateApplicationsTable(); return; }
+                const appData = appDocSnap.data();
+                const templateParams = { applicant_name: appData.firstName, to_email: appData.email };
+
+                if (target.classList.contains('reject-btn')) {
+                    if (confirm(`Reject application from ${appData.firstName}?`)) {
+                        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_REJECTION_TEMPLATE_ID, templateParams);
+                        await deleteDoc(appDocRef);
+                        showToast(`Rejection email sent to ${appData.firstName}.`, 'success');
+                        populateApplicationsTable();
+                    } else { target.disabled = false; target.innerHTML = originalContent; }
+                } else if (target.classList.contains('accept-btn')) {
+                    if (confirm(`Accept application from ${appData.firstName}?`)) {
+                        await addDoc(collection(db, "employees"), { ...appData, hiredOn: serverTimestamp() });
+                        await deleteDoc(appDocRef);
+                        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_ACCEPTANCE_TEMPLATE_ID, templateParams);
+                        showToast(`Accepted ${appData.firstName}! Welcome email sent.`, 'success');
+                        populateApplicationsTable(); populateEmployeesTable();
+                    } else { target.disabled = false; target.innerHTML = originalContent; }
+                }
+            } else if (target.closest('#employees-tbody')) {
+                if (confirm('Permanently remove this employee?')) {
+                    await deleteDoc(doc(db, "employees", docId));
+                    showToast('Employee has been removed.', 'success');
+                    populateEmployeesTable();
+                } else { target.disabled = false; target.innerHTML = originalContent; }
+            }
+        } catch (error) {
+            console.error("Error processing action:", error);
+            showToast("An error occurred. Check console.", 'error');
+            target.disabled = false; target.innerHTML = originalContent;
         }
-      }
     });
   </script>
 </body>
