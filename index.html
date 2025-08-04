@@ -184,7 +184,7 @@
         .main-nav a.active { font-weight: var(--font-weight-semibold); }
         @media (min-width: 769px) { .main-nav a.active::after { transform: scaleX(1); } }
         
-        /* NEW: Global Notification Styles */
+        /* Global Notification Styles */
         .global-notification {
             position: fixed;
             top: 20px;
@@ -248,13 +248,80 @@
 
         .admin-login-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity var(--transition-medium), visibility var(--transition-medium); }
         .admin-login-modal.is-open { opacity: 1; visibility: visible; }
-        .admin-login-modal .modal-content { max-width: 450px; }
+        
+        /* NEW/UPDATED: Admin Login Modal Styles with Video */
+        .admin-login-modal .modal-content {
+            max-width: 850px; /* Wider modal for two columns */
+            width: 90%;
+            padding: 0; /* Remove padding to allow full-bleed video */
+            overflow: hidden; /* Important for border-radius on children */
+        }
         .admin-login-modal.is-open .modal-content { transform: scale(1); }
+        
+        .admin-modal-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        .modal-video-container {
+            position: relative;
+        }
+        .modal-video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .modal-form-container {
+            position: relative;
+            padding: 2.5rem 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .modal-form-container .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+        }
+
         #admin-login-form { display: flex; flex-direction: column; gap: 1.25rem; text-align: left; }
         #admin-login-form h2 { text-align: center; margin-bottom: 1.5rem; font-size: 2rem; }
         .login-error-message { color: #d93025; font-size: 0.9rem; text-align: center; margin-top: -0.5rem; min-height: 1.2em; }
         
+        /* NEW: Styles for Password Toggle */
+        .password-input-wrapper {
+            position: relative;
+        }
+        .password-input-wrapper input {
+            padding-right: 45px !important; /* Make space for the icon */
+        }
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-dark-serpent);
+            opacity: 0.6;
+            transition: opacity var(--transition-fast);
+        }
+        .password-toggle:hover,
+        .password-toggle:focus {
+            opacity: 1;
+            outline: none;
+        }
+        .password-toggle svg {
+            width: 20px;
+            height: 20px;
+        }
+
         @media (max-width: 1024px) { .dual-focus-section { grid-template-columns: 1fr; } }
+        
         @media (max-width: 768px) {
             html { font-size: 15px; }
             .mobile-nav-toggle { display: flex; }
@@ -278,17 +345,27 @@
             .form-row { grid-template-columns: 1fr; }
             .modal-form-header span { font-size: 1.5rem; }
             .modal-header-logo { height: 35px; }
+
+            /* Responsive Admin Login Modal */
+            .admin-modal-layout {
+                grid-template-columns: 1fr;
+            }
+            .modal-video-container {
+                aspect-ratio: 16 / 9; /* Show video at top on mobile */
+            }
+            .modal-form-container {
+                padding: 2.5rem 1.5rem; /* Adjust padding for mobile */
+            }
+            #admin-login-form h2 { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- NEW: Global Notification Element -->
     <div id="global-notification" class="global-notification" aria-live="assertive">
         <p id="notification-message"></p>
     </div>
 
-    <!-- The rest of your body content (header, main, etc.) remains here -->
     <header class="site-header">
         <a href="#" class="logo-link" id="logo-login-trigger">
             <img src="logo.png" alt="Lifewood Logo">
@@ -434,30 +511,46 @@
                     </div>
                 </div>
                 <button type="submit" class="cta-button" id="submit-application-btn">Submit Application</button>
-                <!-- Message for form errors only -->
                 <p class="form-message" id="application-form-message"></p>
             </form>
         </div>
     </div>
     
-    <!-- ADMIN LOGIN MODAL -->
+    <!-- ADMIN LOGIN MODAL (REDESIGNED WITH VIDEO) -->
     <div class="admin-login-modal" id="admin-login-modal" role="dialog" aria-labelledby="admin-modal-title">
         <div class="modal-overlay"></div>
         <div class="modal-content">
-            <button class="modal-close" aria-label="Close form">×</button>
-            <form id="admin-login-form" novalidate>
-                <h2 id="admin-modal-title">Admin Login</h2>
-                <div class="form-group">
-                    <label for="admin-email">Email</label>
-                    <input type="email" id="admin-email" name="admin-email" required>
+            <div class="admin-modal-layout">
+                <div class="modal-video-container">
+                    <video playsinline autoplay muted loop>
+                        <!-- IMPORTANT: Replace this with your video file -->
+                        <source src="Generated File August 03 2025 - 2_59PM-vmake.mp4" type="video/mp4">
+                    </video>
                 </div>
-                <div class="form-group">
-                    <label for="admin-password">Password</label>
-                    <input type="password" id="admin-password" name="admin-password" required>
+                <div class="modal-form-container">
+                    <button class="modal-close" aria-label="Close form">×</button>
+                    <form id="admin-login-form" novalidate>
+                        <h2 id="admin-modal-title">Admin Login</h2>
+                        <div class="form-group">
+                            <label for="admin-email">Email</label>
+                            <input type="email" id="admin-email" name="admin-email" required>
+                        </div>
+                        <!-- MODIFIED: Password field with toggle -->
+                        <div class="form-group">
+                            <label for="admin-password">Password</label>
+                            <div class="password-input-wrapper">
+                                <input type="password" id="admin-password" name="admin-password" required>
+                                <button type="button" class="password-toggle" aria-label="Show password">
+                                    <svg class="icon-eye-visible" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                    <svg class="icon-eye-hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                                </button>
+                            </div>
+                        </div>
+                        <p class="login-error-message" id="login-error-message"></p>
+                        <button type="submit" class="cta-button">Log In</button>
+                    </form>
                 </div>
-                <p class="login-error-message" id="login-error-message"></p>
-                <button type="submit" class="cta-button">Log In</button>
-            </form>
+            </div>
         </div>
     </div>
 
@@ -494,23 +587,21 @@
             const body = document.body;
             body.classList.add('is-loaded');
 
-            // --- UPDATED NOTIFICATION LOGIC ---
+            // --- GLOBAL NOTIFICATION LOGIC ---
             const notificationElement = document.getElementById('global-notification');
             const notificationMessage = document.getElementById('notification-message');
             let notificationTimer;
 
             function showGlobalNotification(message) {
-                clearTimeout(notificationTimer); // Clear any existing timer
+                clearTimeout(notificationTimer);
                 notificationMessage.textContent = message;
                 notificationElement.classList.add('is-visible');
-
-                // Automatically hide after 5 seconds
                 notificationTimer = setTimeout(() => {
                     notificationElement.classList.remove('is-visible');
                 }, 5000);
             }
 
-            // --- MODAL & NAV LOGIC (Unchanged) ---
+            // --- MODAL & NAV LOGIC ---
             const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
             const mainNav = document.querySelector('.main-nav');
             if(mobileNavToggle) {
@@ -552,9 +643,9 @@
             if(closeModalButton) closeModalButton.addEventListener('click', closeModal);
             if(modalOverlay) modalOverlay.addEventListener('click', closeModal);
 
-            // --- UPDATED APPLICATION FORM LOGIC ---
+            // --- APPLICATION FORM LOGIC ---
             const applicationForm = document.getElementById('application-form');
-            const formErrorMessage = document.getElementById('application-form-message'); // This is now for errors only
+            const formErrorMessage = document.getElementById('application-form-message');
             const submitBtn = document.getElementById('submit-application-btn');
 
             if (applicationForm) {
@@ -562,7 +653,7 @@
                     e.preventDefault();
                     submitBtn.disabled = true;
                     submitBtn.textContent = 'Submitting...';
-                    formErrorMessage.style.display = 'none'; // Hide old error messages
+                    formErrorMessage.style.display = 'none';
 
                     const formData = new FormData(applicationForm);
                     const newApplication = {
@@ -582,7 +673,6 @@
                     try {
                         await addDoc(collection(db, "applications"), newApplication);
                         
-                        // ON SUCCESS: Reset form, close modal, and show the global notification
                         applicationForm.reset();
                         submitBtn.disabled = false;
                         submitBtn.textContent = 'Submit Application';
@@ -591,18 +681,16 @@
 
                     } catch (error) {
                         console.error("Error submitting application: ", error);
-                        // ON ERROR: Show the error message inside the modal
                         formErrorMessage.textContent = 'An error occurred. Please try again.';
                         formErrorMessage.style.display = 'block';
                         
-                        // Re-enable the button so the user can try again
                         submitBtn.disabled = false;
                         submitBtn.textContent = 'Submit Application';
                     }
                 });
             }
             
-            // --- ADMIN LOGIN LOGIC (Unchanged) ---
+            // --- ADMIN LOGIN LOGIC ---
             const logoLoginTrigger = document.getElementById('logo-login-trigger');
             const adminModal = document.getElementById('admin-login-modal');
             if (adminModal) {
@@ -621,11 +709,35 @@
               if(closeAdminModalButton) closeAdminModalButton.addEventListener('click', closeAdminModal);
               if(adminModalOverlay) adminModalOverlay.addEventListener('click', closeAdminModal);
               if(adminLoginForm) {
+                  
+                  // NEW: Password Toggle Logic
+                  const passwordInput = document.getElementById('admin-password');
+                  const passwordToggleBtn = adminLoginForm.querySelector('.password-toggle');
+                  if (passwordToggleBtn && passwordInput) {
+                      const eyeVisibleIcon = passwordToggleBtn.querySelector('.icon-eye-visible');
+                      const eyeHiddenIcon = passwordToggleBtn.querySelector('.icon-eye-hidden');
+                      
+                      passwordToggleBtn.addEventListener('click', function() {
+                          const isPassword = passwordInput.type === 'password';
+                          if (isPassword) {
+                              passwordInput.type = 'text';
+                              this.setAttribute('aria-label', 'Hide password');
+                              eyeVisibleIcon.style.display = 'none';
+                              eyeHiddenIcon.style.display = 'block';
+                          } else {
+                              passwordInput.type = 'password';
+                              this.setAttribute('aria-label', 'Show password');
+                              eyeVisibleIcon.style.display = 'block';
+                              eyeHiddenIcon.style.display = 'none';
+                          }
+                      });
+                  }
+
                   adminLoginForm.addEventListener('submit', async function(e) {
                       e.preventDefault();
                       if(loginErrorMessage) loginErrorMessage.textContent = '';
                       const emailInput = document.getElementById('admin-email');
-                      const passwordInput = document.getElementById('admin-password');
+                      const passwordInput = document.getElementById('admin-password'); // Already defined above, but fine here too.
                       try {
                           await signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
                           window.location.href = 'dashboard.html';
@@ -637,8 +749,7 @@
               }
             }
 
-
-            // --- Other visual scripts (scroll, sparkle) are unchanged ---
+            // --- Other visual scripts (scroll, sparkle) ---
             const animatedElements = document.querySelectorAll('.fade-in-section, [data-stagger], .focus-column');
             const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
             const observer = new IntersectionObserver((entries, observer) => {
