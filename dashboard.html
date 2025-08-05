@@ -22,17 +22,19 @@
       --font-primary: 'Manrope', sans-serif;
       --border-radius: 12px;
       --shadow-strong: 0 8px 30px rgba(0, 0, 0, 0.1);
+      --sidebar-width: 240px; /* <!-- NEW/MODIFIED --> Added variable for sidebar width */
     }
 
     /* --- Base & Layout --- */
     body { background-color: var(--color-paper); color: var(--color-dark-serpent); font-family: var(--font-primary); margin: 0; }
     #loading-state { text-align: center; padding: 5rem; font-style: italic; color: #5c6c64; font-size: 1.2rem; }
-    .dashboard-layout { display: none; flex-direction: row; min-height: 100vh; }
+    .dashboard-layout { display: none; flex-direction: row; min-height: 100vh; position: relative; } /* <!-- MODIFIED --> added position relative */
 
     /* --- Sidebar Navigation --- */
     .sidebar {
-      width: 240px; background-color: var(--color-dark-serpent); color: var(--color-sea-salt);
+      width: var(--sidebar-width); background-color: var(--color-dark-serpent); color: var(--color-sea-salt);
       padding: 2rem 1rem; display: flex; flex-direction: column; flex-shrink: 0;
+      transition: transform 0.3s ease-in-out; /* <!-- NEW/MODIFIED --> Added for smooth transition */
     }
     .sidebar-header { font-size: 1.5rem; font-weight: 800; padding: 0 1rem 2rem 1rem; text-align: center; color: var(--color-white); }
     .sidebar-nav { list-style: none; padding: 0; margin: 0; }
@@ -46,17 +48,31 @@
     .nav-link:hover { background-color: rgba(255, 255, 255, 0.1); }
     .nav-link.active { background-color: var(--color-saffaron); color: var(--color-dark-serpent); font-weight: 700; }
 
-    .logout-link:hover {
-        background-color: rgba(220, 53, 69, 0.2);
-        color: var(--color-reject-red);
-    }
+    .logout-link:hover { background-color: rgba(220, 53, 69, 0.2); color: var(--color-reject-red); }
     .logout-link:hover .nav-icon { stroke: var(--color-reject-red); }
 
     /* --- Main Content Area --- */
     .main-content { flex: 1; padding: 2rem 3rem; overflow-y: auto; }
-    .main-header { display: flex; align-items: center; margin-bottom: 2rem; }
+    .main-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; } /* <!-- MODIFIED --> justify-content */
     .main-header h1 { font-size: 2.75rem; font-weight: 800; margin: 0; }
     
+    /* <!-- NEW/MODIFIED --> Hamburger Menu Toggle Button */
+    .menu-toggle {
+      display: none; /* Hidden by default on desktop */
+      background: none; border: none; cursor: pointer; padding: 10px;
+    }
+    .menu-toggle svg { stroke: var(--color-dark-serpent); }
+
+    /* <!-- NEW/MODIFIED --> Menu Overlay for mobile */
+    .menu-overlay {
+        display: none;
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 998;
+    }
+    body.sidebar-open .menu-overlay { display: block; }
+
     .dashboard-section { display: none; }
     .dashboard-section.active { display: block; }
 
@@ -75,10 +91,10 @@
     .data-table { width: 100%; border-collapse: collapse; }
     
     .data-table th, .data-table td {
-        padding: 12px 15px;
-        text-align: center;
+        padding: 12px 15px; text-align: center;
         border-bottom: 1px solid #eef2f0;
         vertical-align: middle;
+        white-space: nowrap; /* <!-- NEW/MODIFIED --> Prevents text from wrapping in cells */
     }
     .data-table tr:last-child td { border-bottom: none; }
     .data-table thead { background-color: var(--color-castleton-green); }
@@ -104,20 +120,59 @@
     a { color: var(--color-castleton-green); font-weight: 600; text-decoration: none; }
     a:hover { text-decoration: underline; color: var(--color-saffaron); }
 
-    #toast-container { position: fixed; top: 20px; right: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 10px; }
+    #toast-container { position: fixed; top: 20px; right: 20px; z-index: 1050; display: flex; flex-direction: column; gap: 10px; }
     .toast { padding: 12px 20px; border-radius: 8px; color: white; font-weight: 600; box-shadow: 0 5px 15px rgba(0,0,0,0.2); opacity: 0; animation: toast-fade-in 0.5s forwards; }
     .toast.success { background-color: var(--color-accept-green); }
     .toast.error { background-color: var(--color-reject-red); }
     @keyframes toast-fade-in { from { opacity: 0; transform: translateX(100%); } to { opacity: 1; transform: translateX(0); } }
+
+    /* --- NEW/MODIFIED --- RESPONSIVE STYLES for screens smaller than 992px --- */
+    @media (max-width: 992px) {
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            z-index: 1000;
+            transform: translateX(-100%);
+        }
+
+        body.sidebar-open .sidebar {
+            transform: translateX(0);
+        }
+
+        .main-content {
+            padding: 1.5rem;
+        }
+
+        .main-header h1 {
+            font-size: 2rem;
+        }
+
+        .menu-toggle {
+            display: inline-flex; /* Show the hamburger menu */
+        }
+    }
+     /* --- NEW/MODIFIED --- RESPONSIVE STYLES for very small screens --- */
+     @media (max-width: 480px) {
+        .main-content { padding: 1.5rem 1rem; }
+        .content-card-header { padding: 1rem 1.5rem; }
+        .content-card-header h2 { font-size: 1.25rem; }
+        .summary-card { padding: 1.5rem; }
+        .summary-card .count { font-size: 2.5rem; }
+    }
   </style>
 </head>
 <body>
 
   <div id="loading-state">Verifying your access...</div>
 
+  <!-- NEW/MODIFIED -->
+  <div class="menu-overlay" id="menu-overlay"></div>
+
   <div class="dashboard-layout" id="dashboard-layout">
     
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">Lifewood HR</div>
       <ul class="sidebar-nav" id="sidebar-nav">
         <li>
@@ -143,6 +198,10 @@
 
     <main class="main-content">
       <header class="main-header">
+        <!-- NEW/MODIFIED -->
+        <button class="menu-toggle" id="menu-toggle">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
         <h1>Admin Dashboard</h1>
       </header>
       
@@ -194,6 +253,10 @@
     // --- 2. DOM ELEMENT REFERENCES ---
     const loadingState = document.getElementById('loading-state'), dashboardLayout = document.getElementById('dashboard-layout'), applicationsTbody = document.getElementById('applications-tbody'), employeesTbody = document.getElementById('employees-tbody'), logoutLink = document.getElementById('logout-link'), totalApplicantsCard = document.getElementById('total-applicants-card'), totalEmployeesCard = document.getElementById('total-employees-card'), toastContainer = document.getElementById('toast-container'), sidebarNav = document.getElementById('sidebar-nav'), sections = document.querySelectorAll('.dashboard-section');
 
+    // <!-- NEW/MODIFIED --> Mobile Menu Elements
+    const menuToggle = document.getElementById('menu-toggle');
+    const menuOverlay = document.getElementById('menu-overlay');
+
     // --- 3. AUTHENTICATION ---
     onAuthStateChanged(auth, user => {
       if (user) { loadingState.style.display = 'none'; dashboardLayout.style.display = 'flex'; populateApplicationsTable(); populateEmployeesTable(); } 
@@ -203,24 +266,35 @@
     // --- 4. UI LOGIC (MODIFIED) ---
     function showToast(message, type = 'success') { const toast = document.createElement('div'); toast.classList.add('toast', type); toast.textContent = message; toastContainer.appendChild(toast); setTimeout(() => { toast.remove(); }, 4000); }
     
-    // --- NEW: Helper function to format time ---
     function formatTo12Hour(timeString) {
-      if (!timeString || !timeString.includes(':')) {
-        return timeString; // Return original if format is unexpected
-      }
+      if (!timeString || !timeString.includes(':')) { return timeString; }
       const [hours24, minutes] = timeString.split(':');
       let hour = parseInt(hours24, 10);
       const ampm = hour >= 12 ? 'PM' : 'AM';
-      
       hour = hour % 12;
-      hour = hour ? hour : 12; // The hour '0' should be '12'
-      
+      hour = hour ? hour : 12;
       return `${hour}:${minutes} ${ampm}`;
     }
 
     logoutLink.addEventListener('click', async () => { try { await signOut(auth); showToast('You have been logged out.'); } catch (error) { console.error('Logout failed:', error); showToast('Logout failed.', 'error'); } });
+    
+    // <!-- NEW/MODIFIED --> Mobile Menu Toggle Logic
+    const closeSidebar = () => document.body.classList.remove('sidebar-open');
+    const openSidebar = () => document.body.classList.add('sidebar-open');
+    menuToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        document.body.classList.toggle('sidebar-open');
+    });
+    menuOverlay.addEventListener('click', closeSidebar);
+    
     sidebarNav.addEventListener('click', (event) => {
         const clickedLink = event.target.closest('.nav-link'); if (!clickedLink || clickedLink.id === 'logout-link') return;
+        
+        // <!-- NEW/MODIFIED --> Close sidebar on link click on mobile
+        if (window.innerWidth <= 992) {
+            closeSidebar();
+        }
+
         const targetId = clickedLink.dataset.target; if (!targetId) return;
         sidebarNav.querySelectorAll('.nav-link').forEach(link => { if (link.dataset.target) link.classList.remove('active') }); 
         clickedLink.classList.add('active');
@@ -241,7 +315,6 @@
           querySnapshot.forEach(doc => {
             const appData = doc.data();
             const row = applicationsTbody.insertRow();
-            // --- MODIFIED: Use the new time formatting function ---
             const formattedTime = `${formatTo12Hour(appData.startTime)} - ${formatTo12Hour(appData.endTime)}`;
             row.innerHTML = `<td>${counter++}</td><td>${appData.firstName} ${appData.lastName}</td><td><a href="mailto:${appData.email}">${appData.email}</a></td><td>${appData.project}</td><td>${formattedTime}</td><td><a href="${appData.resume}" target="_blank" rel="noopener noreferrer">View Resume</a></td><td class="action-column"><div class="action-buttons-column"><button class="action-btn accept-btn" data-id="${doc.id}" title="Accept"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></button><button class="action-btn reject-btn" data-id="${doc.id}" title="Reject"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div></td>`;
           });
@@ -262,7 +335,6 @@
             const empData = doc.data();
             const row = employeesTbody.insertRow();
             const hiredDate = empData.hiredOn.toDate().toLocaleDateString();
-            // --- MODIFIED: Use the new time formatting function ---
             const formattedTime = `${formatTo12Hour(empData.startTime)} - ${formatTo12Hour(empData.endTime)}`;
             row.innerHTML = `<td>${counter++}</td><td>${empData.firstName} ${empData.lastName}</td><td><a href="mailto:${empData.email}">${empData.email}</a></td><td>${empData.project}</td><td><span class="status-badge">Active</span></td><td>${formattedTime}</td><td>${hiredDate}</td><td class="action-column"><div class="action-buttons-column"><button class="action-btn resign-btn" data-id="${doc.id}" title="Resign Employee"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div></td>`;
           });
